@@ -1,3 +1,22 @@
 Name	Generic
+Base_Cost	300
 Max_HP	10
-Terrain_costs	Plains=1,Road=1
+Terrain_costs	Bridge=1, Building=1, Sea=N/A, Beach=1, Mountain=1, Pipeline=N/A, Pipe_Seam=N/A, Plain=1, Reef=N/A, River=1, Road=1, Rough_Sea=N/A, Wasteland=1, Wood=N/A
+Max_Fuel	99
+Move_Range	2
+Armor_type	Infantry
+Primary_Name	Bazooka
+Primary_type	explosion
+Primary_Power	1
+Primary_Range	(1,1)
+Primary_Can_Attack	Tank, Boat
+Secondary_Name	Machine gun
+Secondary_type	gun
+Secondary_Power	1
+Secondary_Range	(1,1)
+Secondary_Can_Attack	Infantry, Tank, Copter
+Carry_types	N/A
+Can_Stealth	False
+Vision_Range	2
+Image_Name	Generic.gif
+Custom_Commands	Capture, Launch
