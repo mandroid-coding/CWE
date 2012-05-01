@@ -28,6 +28,9 @@ class Map(object):
 	
 #	def initialize_terrain(square, 
 	
+	def cursor_square(self):
+		return self.find_square(self.cursor)
+	
 	def add_terrain_to_grid(self):
 		for list_of_squares in self.squares:
 			for square in list_of_squares:
@@ -115,6 +118,7 @@ class Square(object):
 		self.terrain = False
 		self.unit = False
 		self.adjacent_squares = []
+		moove_num = 0
 		
 	def add_unit(self, unit_instance):
 		if self.units != None:
