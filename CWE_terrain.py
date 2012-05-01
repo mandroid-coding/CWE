@@ -1,11 +1,11 @@
 
 
 class Terrain(object):
-	def __init__(self, square, defence):
+	def __init__(self, square, defense):
 		self.square = square
-		self.defence = defence
+		self.defense = defense
 
-class Forrest(Terrain):
+class Forest(Terrain):
 	def __init__(self, square):
 		Terrain.__init__(self, square, 2)
 		
@@ -32,24 +32,26 @@ class River(Terrain):
 class Road(Terrain):
 	def __init__(self, square):
 		Terrain.__init__(self, square, 0)
-		
+
+class Beach(Terrain):
+	def __init__(self, square):
+		Terrain.__init__(self, square, 0)
 
 	
 		
 class Building(Terrain):
-	def __init__(self, square, defence, controller = False):
-		Terrain.__init__(square, defence)
+	def __init__(self, square, defense, controller = False):
+		Terrain.__init__(square, defense)
 		self.HP = 20
 		self.controller = controller
 		
 	def capture(self, unit):
-		self.HP -= unit.hp
 		if self.controller == unit.controller:
-			return false
-		elif self.HP < 0 or self.HP == 0:
+			return False
+		self.HP -= unit.hp
+		if self.HP < 0 or self.HP == 0:
 			self.controller = unit.controller
-			self.HP = 20
-		
+			self.HP = 20		
 		
 class City(Building):
 	def __init__(self, square, controller):
@@ -67,6 +69,6 @@ class Port(Building):
 	def __init__(self, square, controller):
 		Building.__init__(self, square, 3, controller)
 	
-	
+
 	
 	
