@@ -1,4 +1,5 @@
-
+import random
+import CWE_terrain
 
 class CursorError(Exception):
 	def __init__(self, Value):
@@ -22,9 +23,26 @@ class Map(object):
 		self.turn_count = 0
 		self.units = set()
 		self.buildings = set()
-		self.create_map()
+		self.create_grid()
+		self.add_terrain_to_grid()
 	
-	def create_map(self):
+#	def initialize_terrain(square, 
+	
+	def add_terrain_to_grid(self):
+		for list_of_squares in self.squares:
+			for square in list_of_squares:
+				num = random.randrange(1, 10)
+				if num >= 1 and num <= 3:
+					square.terrain = CWE_terrain.Plains(square)
+				if num >= 4 and num <= 6:
+					square.terrain = CWE_terrain.Forrest(square)
+				if num >= 7 and num <= 8:
+					square.terrain = CWE_terrain.Mountain(square)
+				if num >= 9 and num <= 10:
+					square.terrain = CWE_terrain.Road(square)
+		print "hi"
+	
+	def create_grid(self):
 		for x in range(10):
 			x_list = []
 			for y in range(10):
@@ -47,12 +65,14 @@ class Map(object):
 	def move_unit(self, unit , fst_coordinates, end_coordinates):
 		if self.find_square(end_coordinates).unit == False:
 			self.find_square(end_coordinates) == unit
+			if hasattr(self.find_square(fst_coordinates).terrain, "HP"):
+				self.find_square(fst_coordinates).terrain.HP = 20
 			self.find_square(fst_coordinates) == False
 	
 	def unit_count(self, player):
 		count = 0
 		for unit in self.units:
-			if unit.player == player:
+			if unit.controller == player:
 				count += 1
 		return 
 	
@@ -65,7 +85,7 @@ class Map(object):
 	def building_count(self, player):
 		count = 0
 		for building in self.buildings:
-			if building.player == player:
+			if building.controller == player:
 				count += 1
 			
 	def move_cursor(self, direction):
@@ -147,15 +167,24 @@ class Square(object):
 		return coordinates
 		#squares = self.coord_to_square(coordinates)
 			
-		
-		
-x = Map(["Calvin", "Megan"])
-x.squares[3][3].find_range(1,3)
+
+def code_check():
+	x = Map(["Player 1", "Player 2"])
+	y = 0
+	print "test of find_rage(1,3):", x.squares[3][3].find_range(1,3)
+	print "test of terrain population:"
+	for list_of_squares in x.squares:
+		for square in list_of_squares:
+			print str(square.terrain)[13:14] , 
+			y += 1
+			if y == 10:
+				y = 0
+				print ""
+
+if __name__ == "__main__":
+	code_check()
 
 
-
-##class Terrain(object):
-	##def __init__(self, 
 		
 		
 		
