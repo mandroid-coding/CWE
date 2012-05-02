@@ -1,4 +1,7 @@
 import Tkinter
+import CWE_map
+
+
 
 class Cwe():	
 	def __init__(self):
@@ -139,7 +142,7 @@ class Cwe():
 		self.main.bind("<Down>", self.game_move_down)
 		self.main.bind("<Return>", self.game_select)
 		
-		self.bindings = ["<Up>","<Left>","<Right>","<Down>","<Return>"]
+		self.bindings = ["<Up>", "<Left>", "<Right>", "<Down>", "<Return>"]
 		
 		# draws the map
 		for i in self.maps:
@@ -150,7 +153,9 @@ class Cwe():
 		self.images['game_selector'] = Tkinter.PhotoImage(file="images/test.gif")
 		self.game_selector = self.canvas.create_image(0, 0, anchor="nw", image=self.images['game_selector'])
 		self.displayed.append(self.game_selector)
-	def draw_square(self, params):
+	
+	# fix this
+	def draw_square(self, square):
 		self.canvas.create_rectangle(self.side_len*params[0], self.side_len*params[1], self.side_len*params[0]+self.side_len, self.side_len*params[1]+self.side_len, fill=params[2])
 	def game_move_up(self, event):
 		try:

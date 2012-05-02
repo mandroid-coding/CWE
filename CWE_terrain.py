@@ -8,34 +8,42 @@ class Terrain(object):
 class Forest(Terrain):
 	def __init__(self, square):
 		Terrain.__init__(self, square, 2)
+		self.color = 'darkgreen'
 		
 class Plains(Terrain):
 	def __init__(self, square):
 		Terrain.__init__(self, square, 1)
+		self.color = "lightgreen"
 		
 class Mountain(Terrain):
 	def __init__(self, square):
 		Terrain.__init__(self, square, 4)
+		self.color = "brown"
 		
 class Sea(Terrain):
 	def __init__(self, square):
 		Terrain.__init__(self, square, 1)
+		self.color = "blue"
 		
 class Reef(Terrain):
 	def __init__(self, square):
 		Terrain.__init__(self, square, 2)
+		self.color = "turquoise"
 		
 class River(Terrain):
 	def __init__(self, square):
 		Terrain.__init__(self, square, 0)
+		self.color = "lightblue"
 	
 class Road(Terrain):
 	def __init__(self, square):
 		Terrain.__init__(self, square, 0)
+		self.color = "grey"
 
 class Beach(Terrain):
 	def __init__(self, square):
 		Terrain.__init__(self, square, 0)
+		self.color = "tan"
 
 	
 		
