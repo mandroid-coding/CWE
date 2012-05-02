@@ -1,3 +1,5 @@
+#Ignore this comment
+
 class Menu:
     
     def __init__(self,board):
@@ -14,13 +16,15 @@ class Menu:
 
 class MenuOptions:
     
+    #Will cause unit to attack another???
     def attack(self,board):
-        print("attack is working")
+        pass
     
+    #Does nothing, as it should
     def exitMenu(self,cords,board):
-        print("exit_menu is working")
+        pass
 
-#Unit movement functionality--called by graphics
+    #Unit movement functionality--called by graphics
     def getHighlightCords(self,board):
         unit = board.cursor_square().unit
         self.recursiveHighlight(board.cursor,board,unit)
@@ -77,7 +81,7 @@ class MenuOptions:
                 self.recursiveHighlight((cords[0],cords[1]+1),board,unit)
         
         
-#Get list of building options
+    #Get list of building options
     def getBuildOptions(self,board):
         build_opt_list = []
         build_txt_list = []
@@ -92,11 +96,33 @@ class MenuOptions:
         build_txt_list.append("Nothing")
         
         return build_opt_list,build_txt_list
-
-#General options
     
-    #Increment turn by one
+    #End turn and perform passive building actions
     def endTurn(self,board):
+        for bldg in board.buildings:
+            #If it's controlled by the current player,
+            if(bldg.controller == board.current_player()):
+                #Then if it's a factory and has a unit on it owned by the player,
+#FIX: assumptions about name storage
+                if (any([bldg.name=="base",bldg.name=="airport",bldg.name=="port"]) and (bldg.square.unit!=None and bldg.square.unit.controller==board.current_player)):
+                    #Then if that unit's damaged,
+                    if(bldg.square.unit.hp < bldg.square.unit.max_hp):
+                        #Repair it by 20% of its max hp.
+                        bldg.square.unit.hp += (bldg.square.unit.max_hp*.2)
+                        #If that brings it above full health,
+                        if(bldg.square.unit.hp>bldg.square.unit.max_hp):
+                            #Set its health back to full.
+                            bldg.square.unit.hp = bldg.square.unit.max_hp
+                        #Deduct costs of repair from controller's finances.
+#FIX: doesn't check if player can afford
+                        bldg.square.unit.controller.money -= (bldg.square.unit.cost * 0.2)
+                        
+                #If it's a city, is controlled by the current player and isn't covered by an enemy unit,
+                elif ((bldg.name == "city") and not (bldg.square.unit!=None and bldg.square.unit.controller!=board.current_player())):
+                    #Give the current player one MILLION thousandths of a dollar
+                    board.current_player().money += 1000
+            
+        #Increment turn by one
         board.turn += 1
     
     #Will show view options
@@ -107,7 +133,7 @@ class MenuOptions:
     def saveAndQuit(self,board):
         pass
 
-#Grab top-level action menu
+    #Grab top-level action menu
     def getMenuOptions(self,board):
         #Methods that the menu can access
         opts_list = []
@@ -117,7 +143,7 @@ class MenuOptions:
         sqr = board.cursor_square()
         if((sqr.unit!=None) and (sqr.unit.player == board.current_player())):
             pass
-          
+#FIX: assumptions about terrain naming
         elif((sqr.unit==None) and (any([str(sqr.terrain)=="base",str(sqr.terrain)=="airport",str(sqr.terrain)=="port"]))):
             return self.getBuildOptions(board)
         
