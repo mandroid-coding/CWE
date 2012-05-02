@@ -38,7 +38,7 @@ class Map(object):
 				if num >= 1 and num <= 3:
 					square.terrain = CWE_terrain.Plains(square)
 				if num >= 4 and num <= 6:
-					square.terrain = CWE_terrain.Forrest(square)
+					square.terrain = CWE_terrain.Forest(square)
 				if num >= 7 and num <= 8:
 					square.terrain = CWE_terrain.Mountain(square)
 				if num >= 9 and num <= 10:
@@ -171,7 +171,7 @@ class Square(object):
 		return coordinates
 		#squares = self.coord_to_square(coordinates)
 			
-
+# PLEASE NOTE THAT THESE DON'T WORK PROPERLY, PLEASE DON'T RELY ON THEM
 def code_check():
 	x = Map(["Player 1", "Player 2"])
 	y = 0
@@ -184,6 +184,21 @@ def code_check():
 			if y == 10:
 				y = 0
 				print ""
+
+def print_map(a_map):
+	print "Printing map to console.\nBeep beep, boop boop..."
+	counter = 0
+	for x in a_map.squares:
+		# this is supposed to iterate down columns
+		for y in x:
+			# but it prints down rows
+			print str(y.terrain)[13:14] , 
+			counter += 1
+			if counter == 10:
+				counter = 0
+				print ""
+
+
 
 if __name__ == "__main__":
 	code_check()

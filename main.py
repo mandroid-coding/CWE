@@ -37,11 +37,11 @@ class Cwe():
 		# loading image files to display in main menu
 		# saved in self.images for calling later
 		self.images = {}
-		self.images['title1'] = Tkinter.PhotoImage(file="images/title1.gif")
-		self.images['new'] = Tkinter.PhotoImage(file="images/new_game.gif")
-		self.images['load'] = Tkinter.PhotoImage(file="images/load_game.gif")
-		self.images['exit'] = Tkinter.PhotoImage(file="images/exit.gif")
-		self.images['selector'] = Tkinter.PhotoImage(file="images/tank.gif")		
+		self.images['title1'] = Tkinter.PhotoImage(file="res/images/title1.gif")
+		self.images['new'] = Tkinter.PhotoImage(file="res/images/new_game.gif")
+		self.images['load'] = Tkinter.PhotoImage(file="res/images/load_game.gif")
+		self.images['exit'] = Tkinter.PhotoImage(file="res/images/exit.gif")
+		self.images['selector'] = Tkinter.PhotoImage(file="res/images/tank.gif")		
 
 		# drawing them on teh canvas
 		self.selector = self.canvas.create_image(100, 200, anchor="nw", image=self.images['selector'])
@@ -93,8 +93,8 @@ class Cwe():
 
 			# adds images to working canvas list
 			self.images['confirm_box'] = self.canvas.create_rectangle(200, 200, 600, 400, outline='white', fill="red")
-			self.images['confirm_text'] = Tkinter.PhotoImage(file="images/confirm.gif")
-			self.images['yesno'] = Tkinter.PhotoImage(file='images/yesno.gif')
+			self.images['confirm_text'] = Tkinter.PhotoImage(file="res/images/confirm.gif")
+			self.images['yesno'] = Tkinter.PhotoImage(file='res/images/yesno.gif')
 			self.images['exit_selector'] = self.canvas.create_rectangle(420, 335, 465, 365, outline='darkgreen')
 			self.displayed+=[self.images['exit_selector'], self.images['confirm_box'], self.canvas.create_image(203, 202, anchor="nw", image=self.images['confirm_text']),self.canvas.create_image(325, 325, anchor="nw", image=self.images['yesno'])]
 	
@@ -128,11 +128,12 @@ class Cwe():
 
 		# defines testing map		
 		# listing each row...
-		col1 = [[0,0,'green'],[0,1,'red'],[0,2,'green'],[0,3,'red']]
-		col2 = [[1,0,'green'],[1,1,'red'],[1,2,'green'],[1,3,'red']]
-		col3 = [[2,0,'green'],[2,1,'red'],[2,2,'green'],[2,3,'red']]
-		col4 = [[3,0,'green'],[3,1,'red'],[3,2,'green'],[3,3,'red']]
-		self.maps = [col1,col2,col3,col4]		
+#		col1 = [[0,0,'green'],[0,1,'red'],[0,2,'green'],[0,3,'red']]
+#		col2 = [[1,0,'green'],[1,1,'red'],[1,2,'green'],[1,3,'red']]
+#		col3 = [[2,0,'green'],[2,1,'red'],[2,2,'green'],[2,3,'red']]
+#		col4 = [[3,0,'green'],[3,1,'red'],[3,2,'green'],[3,3,'red']]
+#		self.maps = [col1,col2,col3,col4]		
+		self.maps = CWE_map.Map(["Player1", "Player2"])
 		
 		
 		# bindings
@@ -145,18 +146,21 @@ class Cwe():
 		self.bindings = ["<Up>", "<Left>", "<Right>", "<Down>", "<Return>"]
 		
 		# draws the map
-		for i in self.maps:
-			for j in i:
-				self.draw_square(j)
-		
+		# iterates through each column
+		for i in range(len(self.maps.squares)):
+			
+			# iterates through each square from the top
+			for j in range(len(self.maps.squares[i])):
+				self.draw_square(i, j, self.maps.squares[i][j].terrain.color)
+				
 		# Loads selector image
-		self.images['game_selector'] = Tkinter.PhotoImage(file="images/test.gif")
+		self.images['game_selector'] = Tkinter.PhotoImage(file="res/images/test.gif")
 		self.game_selector = self.canvas.create_image(0, 0, anchor="nw", image=self.images['game_selector'])
 		self.displayed.append(self.game_selector)
 	
 	# fix this
-	def draw_square(self, square):
-		self.canvas.create_rectangle(self.side_len*params[0], self.side_len*params[1], self.side_len*params[0]+self.side_len, self.side_len*params[1]+self.side_len, fill=params[2])
+	def draw_square(self, x, y, color):
+		self.canvas.create_rectangle(self.side_len*x, self.side_len*y, self.side_len*x+self.side_len, self.side_len*y+self.side_len, fill=color)
 	def game_move_up(self, event):
 		try:
 			# calculates new indices
@@ -169,12 +173,11 @@ class Cwe():
 				raise IndexError
 
 			# selects new square.  This is where the IndexError is thrown if no square exists
-			newsquare = self.maps[newx][newy]
+			newsquare = self.maps.squares[newx][newy]
 			# resets the coords of the selector
-			self.selected = [newsquare[0], newsquare[1]]
+			self.selected = [newx, newy]
 			# finally moves the cursor
 			self.canvas.move(self.game_selector, 0, -self.side_len)
-			print self.selected
 		# catches the error thrown when no square exists
 		except IndexError:
 			print 'locking onto the grid is working'
@@ -190,9 +193,9 @@ class Cwe():
 				raise IndexError
 			
 			# selects new square.  This is where the IndexError is thrown if no square exists
-			newsquare = self.maps[newx][newy]
+			newsquare = self.maps.squares[newx][newy]
 			# resets the coords of the selector
-			self.selected = [newsquare[0], newsquare[1]]
+			self.selected = [newx, newy]
 			# finally moves the cursor
 			self.canvas.move(self.game_selector, -self.side_len, 0)
 		# catches the error thrown when no square exists
@@ -204,9 +207,9 @@ class Cwe():
 			newx = self.selected[0]+1
 			newy = self.selected[1]
 			# selects new square.  This is where the IndexError is thrown if no square exists
-			newsquare = self.maps[newx][newy]
+			newsquare = self.maps.squares[newx][newy]
 			# resets the coords of the selector
-			self.selected = [newsquare[0], newsquare[1]]
+			self.selected = [newx, newy]
 			# finally moves the cursor
 			self.canvas.move(self.game_selector, self.side_len, 0)
 		# catches the error thrown when no square exists
@@ -218,9 +221,9 @@ class Cwe():
 			newx = self.selected[0]
 			newy = self.selected[1] + 1
 			# selects new square.  This is where the IndexError is thrown if no square exists
-			newsquare = self.maps[newx][newy]
+			newsquare = self.maps.squares[newx][newy]
 			# resets the coords of the selector
-			self.selected = [newsquare[0], newsquare[1]]
+			self.selected = [newx, newy]
 			# finally moves the cursor
 			self.canvas.move(self.game_selector, 0, self.side_len)
 		# catches the error thrown when no square exists

@@ -18,7 +18,7 @@ class Plains(Terrain):
 class Mountain(Terrain):
 	def __init__(self, square):
 		Terrain.__init__(self, square, 4)
-		self.color = "brown"
+		self.color = "chocolate"
 		
 class Sea(Terrain):
 	def __init__(self, square):
@@ -38,7 +38,7 @@ class River(Terrain):
 class Road(Terrain):
 	def __init__(self, square):
 		Terrain.__init__(self, square, 0)
-		self.color = "grey"
+		self.color = "grey90"
 
 class Beach(Terrain):
 	def __init__(self, square):
