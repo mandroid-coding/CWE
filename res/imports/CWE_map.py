@@ -27,7 +27,11 @@ class Map(object):
 		self.add_terrain_to_grid()
 	
 #	def initialize_terrain(square, 
-	
+	def refresh_units(self):
+		for unit in self.units:
+			if unit.player = self.current_player:
+				unit.has_moved = False
+				
 	def cursor_square(self):
 		return self.find_square(self.cursor)
 	
