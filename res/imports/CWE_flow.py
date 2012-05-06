@@ -1,5 +1,3 @@
-#Ignore this comment
-
 class Menu:
     
     def __init__(self,board):
@@ -20,13 +18,18 @@ class MenuOptions:
     def attack(self,board):
         pass
     
+    #Unit capture functionality
+    def capture(self,board):
+        pass
+    
     #Does nothing, as it should
     def exitMenu(self,cords,board):
         pass
 
     #Unit movement functionality--called by graphics
-    def getHighlightCords(self,board):
+    def getMoveHighlights(self,board):
         unit = board.cursor_square().unit
+#FIX: no handling for missing unit
         self.recursiveHighlight(board.cursor,board,unit)
         
         cordarray = []
@@ -38,6 +41,13 @@ class MenuOptions:
                     board.squares[col][sq].move_num=0
         
         return cordarray
+    #Get the range in which a unit can attack from current position
+    def getAttackHighlights(self,board):
+        pass
+    
+    #Get the range in which a unit can move and the range in which it can attack from movable spaces
+    def getBothHighlights(self,board):
+        pass
     
     def recursiveHighlight(self,cords,board,unit):
         
