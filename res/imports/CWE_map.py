@@ -29,7 +29,7 @@ class Map(object):
 #	def initialize_terrain(square, 
 	def refresh_units(self):
 		for unit in self.units:
-			if unit.player = self.current_player:
+			if unit.player == self.current_player:
 				unit.has_moved = False
 				
 	def cursor_square(self):
@@ -47,7 +47,6 @@ class Map(object):
 					square.terrain = CWE_terrain.Mountain(square)
 				if num >= 9 and num <= 10:
 					square.terrain = CWE_terrain.Road(square)
-		print "hi"
 	
 	def create_grid(self):
 		for x in range(10):
