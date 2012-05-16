@@ -1,7 +1,7 @@
 Name	Generic
 Base_Cost	3000
 Max_HP	10
-Terrain_Costs	Bridge=1, Building=1, Sea=N/A, Beach=1, Mountain=1, Pipeline=N/A, Pipe_Seam=N/A, Plain=1, Reef=N/A, River=1, Road=1, Rough_Sea=N/A, Wasteland=1, Wood=N/A
+Terrain_Costs	Bridge=1, Building=1, Sea=N/A, Beach=1, Mountain=1, Pipeline=N/A, Pipe_Seam=N/A, Plain=1, Reef=N/A, River=1, Road=1, Rough_Sea=N/A, Wasteland=1, Wood=1
 Max_Fuel	99
 Move_Range	2
 Armor_Type	Mech
