@@ -65,7 +65,7 @@ class Unit:
             self.secondary_table = {}
             for pair in fields["Secondary_Table"].split(", "):
                 realpair = pair.split("=")
-                secondary_table[ realpair[0] ] = int(realpair[1]) )
+                secondary_table[ realpair[0] ] = int(realpair[1])
         self.carry_types = fields["Carry_Types"].split(", ")
         if self.carry_types != ["N/A"]:
             self.carry_count = int(fields["Carry_Count"])
@@ -89,7 +89,7 @@ class Unit:
             self.can_launch = True
         else:
             self.can_launch = False
-        if fields["Can_Explode"] == "True"
+        if fields["Can_Explode"] == "True":
             self.can_explode = True
         else:
             self.can_explode = False
