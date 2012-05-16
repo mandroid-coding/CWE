@@ -1,0 +1,22 @@
+Name	Neotank
+Base_Cost	28000
+Max_HP	10
+Terrain_Costs	Bridge=1, Building=1, Sea=N/A, Beach=1, Mountain=N/A, Pipeline=N/A, Pipe_Seam=N/A, Plain=1, Reef=N/A, River=N/A, Road=1, Rough_Sea=N/A, Wood=2
+Max_Fuel	50
+Move_Range	4
+Armor_Type	Neotank
+Primary_Name	Cannon
+Primary_Range	(1,1)
+Primary_Table	Recon=195, Tank=180, Medium_Tank=125, Neotank=115, Megatank=65, APC=195, Artillery=195, Rockets=195, Anti-Air=195, Missiles=195, Piperunner=180, Battleship=45, Cruiser=65, Lander=75, Sub=45, Black_Boat=105, Carrier=45
+Ammo	8
+Secondary_Name	Machine gun
+Secondary_Range	(1,1)
+Secondary_Table	Infantry=135, Mech=125, Recon=65, Tank=10, Medium_Tank=1, Neotank=1, Megatank=1, APC=65, Artillery=65, Rockets=75, Anti-Air=17, Missiles=55, Piperunner=10, B-Copter=22, T-Copter=55
+Carry_Types	N/A
+Vision_Range	1
+Image_Name	Tank.gif
+Can_Stealth	False
+Can_Capture	False
+Can_Resupply	False
+Can_Launch	False
+Can_Explode	False

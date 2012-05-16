@@ -1,0 +1,19 @@
+Name	Recon
+Base_Cost	4000
+Max_HP	10
+Terrain_Costs	Bridge=1, Building=1, Sea=N/A, Beach=1, Mountain=N/A, Pipeline=N/A, Pipe_Seam=N/A, Plain=2, Reef=N/A, River=N/A, Road=1, Rough_Sea=N/A, Wood=3
+Max_Fuel	80
+Move_Range	8
+Armor_Type	Recon
+Primary_Name	N/A
+Secondary_Name	Machine gun
+Secondary_Range	(1,1)
+Secondary_Table Mech=70 Infatry=65, Recon=35, Tank=6, Medium_Tank=1, Neotank=1, Megatank=1, APC=45, Artillery=45, Rockets=55, Anti-Air=4, Missiles=28, Piperunner=6, B-Copter=10, T-Copter=35
+Carry_Types	N/A
+Vision_Range	5
+Image_Name	Generic.gif
+Can_Stealth	False
+Can_Capture	False
+Can_Resupply	False
+Can_Launch	False
+Can_Explode	False

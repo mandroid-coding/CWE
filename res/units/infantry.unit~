@@ -8,7 +8,7 @@ Armor_Type	Infantry
 Primary_Name	N/A
 Secondary_Name	Machine gun
 Secondary_Range	(1,1)
-Secondary_Table	Mech=55, Infatry=45, Recon=12, Tank=5, Medium_Tank=1, Neotank=1, Megatank=1, APC=14, Artillery=15, Rockets=25, Anti-Air=5, Missiles=25, Piperunner=5, B-Copter=7, T-Copter=30
+Secondary_Table Mech=55, Infatry=45, Recon=12, Tank=5, Medium_Tank=1, Neotank=1, Megatank=1, APC=14, Artillery=15, Rockets=25, Anti-Air=5, Missiles=25, Piperunner=5, B-Copter=7, T-Copter=30
 Carry_Types	N/A
 Vision_Range	2
 Image_Name	Generic.gif
