@@ -29,7 +29,7 @@ class Map(object):
 #	def initialize_terrain(square, 
 	def refresh_units(self):
 		for unit in self.units:
-			if unit.player = self.current_player:
+			if unit.player == self.current_player:
 				unit.has_moved = False
 				
 	def cursor_square(self):

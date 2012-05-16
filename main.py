@@ -1,3 +1,6 @@
+import sys
+sys.path.append('./res/imports')
+
 import Tkinter
 import CWE_map
 
