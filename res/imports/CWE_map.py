@@ -1,5 +1,6 @@
 import random
 import CWE_terrain
+import CWE_units
 
 class CursorError(Exception):
 	def __init__(self, Value):
@@ -23,8 +24,10 @@ class Map(object):
 		self.turn_count = 0
 		self.units = set()
 		self.buildings = set()
-		self.create_grid()
-		self.add_terrain_to_grid()
+		self.squares = self.test_map_one()
+	
+	def get_square(self, coordinate_list):
+		return self.squares[coordinate_list[0]][coordinate_list[1]]
 	
 #	def initialize_terrain(square, 
 	def refresh_units(self):
@@ -34,8 +37,9 @@ class Map(object):
 				
 	def cursor_square(self):
 		return self.find_square(self.cursor)
-	
-	def add_terrain_to_grid(self):
+		
+	def test_map_one(self):
+		test_map = self.create_grid(10)
 		for list_of_squares in self.squares:
 			for square in list_of_squares:
 				num = random.randrange(1, 10)
@@ -47,13 +51,23 @@ class Map(object):
 					square.terrain = CWE_terrain.Mountain(square)
 				if num >= 9 and num <= 10:
 					square.terrain = CWE_terrain.Road(square)
+		self.get_square([0,9]).add_terrain(Capitol(self.get_square([0,9]), self.player_list[0]))
+		self.get_square([9,0]).add_terrain(Capitol(self.get_square([0,0]), self.player_list[1]))
+		self.get_square([1,8]).add_unit(Unit("infantry.unit", square = self.get_square([1,8]), player = player_list[0]))
+		self.get_square([8,1]).add_unit(Unit("infantry.unit", square = self.get_square([8,1]), player = player_list[1]))
+		self.get_square([2,7]).add_terrain(Base(self.get_square([2,7])))
+		self.get_square([2,7]).add_terrain(Base(self.get_square([2,7]).player_list[0]))
+		self.get_square([2,7]).add_terrain(Base(self.get_square([2,7]).player_list[1]))
+		
 	
-	def create_grid(self):
-		for x in range(10):
+	def create_grid(self, grid_width_and_height):
+		map_squares = []
+		for x in range(grid_width_and_height):
 			x_list = []
-			for y in range(10):
+			for y in range(grid_width_and_height):
 				x_list.append(Square(self, (x,y)))
-			self.squares.append(x_list)
+			map_squares.append(x_list)
+		return map_squares
 	
 	#takes a tuple of (x,y) coordinates
 	def find_square(coordinates):
@@ -134,9 +148,11 @@ class Square(object):
 		if self.unit != None:
 			self.unit = none
 		else:
-			raise UnitError("A unit was not on the square yet remove_unit was called on the square...")
+			return False
+			#raise UnitError("A unit was not on the square yet remove_unit was called on the square...")
 	
 	def add_terrain(self, terrain):
+		self.initial_terrain = self.terrain
 		self.terrain = terrain
 	
 	def remove_building(self):
