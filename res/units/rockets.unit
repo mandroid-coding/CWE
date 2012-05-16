@@ -1,0 +1,20 @@
+Name	Rockets
+Base_Cost	15000
+Max_HP	10
+Terrain_Costs	Bridge=1, Building=1, Sea=N/A, Beach=1, Mountain=N/A, Pipeline=N/A, Pipe_Seam=N/A, Plain=2, Reef=N/A, River=N/A, Road=1, Rough_Sea=N/A, Wood=3
+Max_Fuel	50
+Move_Range	5
+Armor_Type	Rockets
+Primary_Name	Cannon
+Primary_Range	(3,5)
+Primary_Table	Infantry=95, Mech=90, Recon=90, Tank=80, Medium_Tank=55, Neotank=50, Megatank=25, APC=80, Artillery=80, Rockets=85, Anti-Air=85, Missiles=90, Piperunner=80, Battleship=55, Cruiser=60, Lander=60, Sub=85, Black_Boat=60, Carrier=60
+Ammo	5
+Secondary_Name	N/A
+Carry_Types	N/A
+Vision_Range	1
+Image_Name	Tank.gif
+Can_Stealth	False
+Can_Capture	False
+Can_Resupply	False
+Can_Launch	False
+Can_Explode	False
