@@ -89,7 +89,7 @@ class Unit:
             self.can_launch = True
         else:
             self.can_launch = False
-        if fields["Can_Explode"] == "True"
+        if fields["Can_Explode"] == "True":
             self.can_explode = True
         else:
             self.can_explode = False
@@ -117,11 +117,11 @@ class Unit:
         else:
             f = 0
         target.hp -= f
-        casualty = False
+        survived = True
         if target.hp <= 0:
             target.die()
-            casualty = True
-        return casualty
+            survived = False
+        return survived
     def die(self):
         self.square.remove_unit()
     #need functions: attack(), 
