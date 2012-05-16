@@ -30,6 +30,9 @@ class Cwe():
 	
 	# main menu display and functions
 	def display_main(self):
+		# sets location
+		self.location = 'Main'
+		
 		# resets the canvas, useful for when there is a need to wipe away the rest of what's on the screen in one fell swoop
 		self.canvas = Tkinter.Canvas(self.frame, width=800, height=600, background="darkgreen")
 		self.canvas.place(x=0,y=0)
@@ -82,44 +85,8 @@ class Cwe():
 
 		# exit
 		elif self.selected == 2:
-			# clears old bindings
-			self.clear_bindings()
-			
-			# keeps track of where the selector is
-			self.confirmation_selection = 1
-			
-			# makes new bindings
-			self.main.bind("<Return>", self.confirmation_select)
-			self.main.bind("<Left>", self.confirmation_left)
-			self.main.bind("<Right>", self.confirmation_right)
-			self.bindings = ["<Return>", "<Left>", "<Right>"]
-
-			# adds images to working canvas list
-			self.images['confirm_box'] = self.canvas.create_rectangle(200, 200, 600, 400, outline='white', fill="red")
-			self.images['confirm_text'] = Tkinter.PhotoImage(file="res/images/confirm.gif")
-			self.images['yesno'] = Tkinter.PhotoImage(file='res/images/yesno.gif')
-			self.images['exit_selector'] = self.canvas.create_rectangle(420, 335, 465, 365, outline='darkgreen')
-			self.displayed+=[self.images['exit_selector'], self.images['confirm_box'], self.canvas.create_image(203, 202, anchor="nw", image=self.images['confirm_text']),self.canvas.create_image(325, 325, anchor="nw", image=self.images['yesno'])]
+			self.display_confirmation()
 	
-	# exit confirmation functions
-	def confirmation_right(self, event):
-		# it can only move right if it selects the 0th element because there are only 2 elements
-		if self.confirmation_selection == 0:
-			self.canvas.move(self.images['exit_selector'], 91, 0)
-			self.confirmation_selection = 1
-	def confirmation_left(self,event):
-		if self.confirmation_selection == 1:
-			self.canvas.move(self.images['exit_selector'], -91, 0)
-			self.confirmation_selection = 0
-	def confirmation_select(self, event):
-		if self.confirmation_selection==0:
-			print 'Come play again soon!!'
-			self.main.destroy()
-		elif self.confirmation_selection==1:
-			self.clear_all_displayed()
-			self.clear_bindings()
-			self.display_main()
-
 	# functions to display pregame config menu
 	def display_new_config(self):
 		# just a placeholder right now since getting the other stuff done is more important for everyone else.
@@ -127,6 +94,8 @@ class Cwe():
 
 	# in-game functions
 	def new_game(self):		
+		self.location = "Ingame"
+		
 		self.selected = [0,0]
 
 		# defines testing map		
@@ -157,7 +126,7 @@ class Cwe():
 				self.draw_square(i, j, self.maps.squares[i][j].terrain.color)
 				
 		# Loads selector image
-		self.images['game_selector'] = Tkinter.PhotoImage(file="res/images/test.gif")
+		self.images['game_selector'] = Tkinter.PhotoImage(file="res/images/game_selector.gif")
 		self.game_selector = self.canvas.create_image(0, 0, anchor="nw", image=self.images['game_selector'])
 		self.displayed.append(self.game_selector)
 	
@@ -235,8 +204,49 @@ class Cwe():
 	def game_select(self, event):
 		# FIXME: add check for if there's no unit and no building
 		print 'selected'
-		# this will be the menu...
-		self.canvas.create_rectangle(0, 400, 200, 800, fill='black')
+		self.display_game_menu()
+
+	def display_game_menu(self):
+		self.menu_selector = 0
+		
+		#update bindings
+		self.clear_bindings()			
+		self.main.bind("<Up>", self.game_menu_up)
+		self.main.bind("<Down>", self.game_menu_down)
+		self.main.bind("<Return>", self.game_menu_select)
+		self.bindings = ["<Up>","<Down>","<Return>"]
+
+		self.images['ingame_menu'] = self.canvas.create_rectangle(600, 500, 800, 600, outline='white', fill="red")
+		self.images['ingame_quit'] = self.canvas.create_text(700,585, text="Main Menu", fill='green')
+		self.images['ingame_save'] = self.canvas.create_text(700,565, text="Save", fill='green')
+		self.images['ingame_end_turn'] = self.canvas.create_text(700,525, text="End Turn", fill='green')
+		self.images['ingame_stats'] = self.canvas.create_text(700,545, text="Stats", fill='green')
+		self.images['ingame_selector'] = self.canvas.create_rectangle(650,515,755,535, outline='green')
+
+	def game_menu_up(self, event):
+		if self.menu_selector!=0:
+			self.menu_selector -= 1
+			self.canvas.move(self.images['ingame_selector'], 0, -20)
+			print 'menu up fired'
+		else: 
+			pass
+
+	def game_menu_down(self, event):
+		if self.menu_selector!=3:
+			self.menu_selector += 1
+			self.canvas.move(self.images['ingame_selector'], 0, 20)
+			print 'menu down fired'
+		else: 
+			pass
+	
+	def game_menu_select(self, event):
+		print 'selected'
+		print self.menu_selector
+		# end game
+		if self.menu_selector == 3:
+			self.display_confirmation()
+
+
 
 	# functions able to be called from any game state
 	def clear_all_displayed(self):
@@ -251,6 +261,70 @@ class Cwe():
 		for i in self.bindings:
 			self.main.unbind(i)
 		self.bindings=[]
+	def display_confirmation(self):
+		# displays confirmation message
+		
+		# clears old bindings
+		self.clear_bindings()
+			
+		# keeps track of where the selector is
+		self.confirmation_selection = 1
+			
+		# makes new bindings
+		self.main.bind("<Return>", self.confirmation_select)
+		self.main.bind("<Left>", self.confirmation_left)
+		self.main.bind("<Right>", self.confirmation_right)
+		self.bindings = ["<Return>", "<Left>", "<Right>"]
+
+		# adds images to working canvas list
+		self.images['confirm_box'] = self.canvas.create_rectangle(200, 200, 600, 400, outline='white', fill="red")
+		self.images['yesno'] = Tkinter.PhotoImage(file='res/images/yesno.gif')
+		self.images['exit_selector'] = self.canvas.create_rectangle(420, 335, 465, 365, outline='darkgreen')
+		self.images['confirm_text'] = Tkinter.PhotoImage(file="res/images/confirm.gif")
+		
+		self.confirmation_images = [self.canvas.create_image(203, 202, anchor="nw", image=self.images['confirm_text'])]
+		self.confirmation_images += [self.images['exit_selector'], self.images['confirm_box'], self.canvas.create_image(325, 325, anchor="nw", image=self.images['yesno'])]
+	# exit confirmation functions
+	def confirmation_right(self, event):
+		# it can only move right if it selects the 0th element because there are only 2 elements
+		if self.confirmation_selection == 0:
+			self.canvas.move(self.images['exit_selector'], 91, 0)
+			self.confirmation_selection = 1
+	def confirmation_left(self,event):
+		if self.confirmation_selection == 1:
+			self.canvas.move(self.images['exit_selector'], -91, 0)
+			self.confirmation_selection = 0
+	def confirmation_select(self, event):		
+		# fork for main menu
+		if self.location=='Main':
+			if self.confirmation_selection==0:
+				print 'Come play again soon!!'
+				self.main.destroy()
+			elif self.confirmation_selection==1:
+				self.clear_all_displayed()
+				self.clear_bindings()
+				self.display_main()
+
+		# fork for ingame
+		elif self.location=='Ingame':
+			if self.confirmation_selection==0:
+				self.display_main()
+			elif self.confirmation_selection==1:
+				self.clear_confirmation()
+				# bindings
+				self.main.bind("<Up>", self.game_move_up)
+				self.main.bind("<Left>", self.game_move_left)
+				self.main.bind("<Right>", self.game_move_right)
+				self.main.bind("<Down>", self.game_move_down)
+				self.main.bind("<Return>", self.game_select)
+		
+		
+		self.bindings = ["<Up>", "<Left>", "<Right>", "<Down>", "<Return>"]
+
+	def clear_confirmation(self):
+		for i in self.confirmation_images:
+			self.canvas.delete(i)
+
 
 if __name__=="__main__":
 	app = Cwe()
