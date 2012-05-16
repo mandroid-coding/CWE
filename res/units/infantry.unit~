@@ -1,0 +1,19 @@
+Name	Infantry
+Base_Cost	1000
+Max_HP	10
+Terrain_Costs	Bridge=1, Building=1, Sea=N/A, Beach=1, Mountain=2, Pipeline=N/A, Pipe_Seam=N/A, Plain=1, Reef=N/A, River=2, Road=1, Rough_Sea=N/A, Wasteland=1, Wood=N/A
+Max_Fuel	99
+Move_Range	3
+Armor_Type	Infantry
+Armor_Defense   1
+Primary_Name	N/A
+Secondary_Name	Machine gun
+Secondary_Type	Gun
+Secondary_Power	1
+Secondary_Range	(1,1)
+Secondary_Can_Attack	Infantry, Tank, Copter
+Carry_Types	N/A
+Can_Stealth	False
+Vision_Range	2
+Image_Name	Generic.gif
+Custom_Commands	Capture, Launch
