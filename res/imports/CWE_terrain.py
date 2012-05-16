@@ -58,7 +58,7 @@ class Beach(Terrain):
 		
 class Building(Terrain):
 	def __init__(self, square, defense, controller):
-		Terrain.__init__(square, defense)
+		Terrain.__init__(self, square, defense)
 		self.HP = 20
 		self.controller = controller
 		
@@ -71,7 +71,7 @@ class Building(Terrain):
 			self.HP = 20		
 
 class Capitol(Building):
-	def __init__(self, square, controller = False)
+	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 4, controller)
 		self.label = "Capitol"
 	

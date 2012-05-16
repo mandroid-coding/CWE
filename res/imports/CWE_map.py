@@ -1,6 +1,6 @@
 import random
 import CWE_terrain
-import CWE_units
+#import CWE_Units
 
 class CursorError(Exception):
 	def __init__(self, Value):
@@ -24,7 +24,8 @@ class Map(object):
 		self.turn_count = 0
 		self.units = set()
 		self.buildings = set()
-		self.squares = self.test_map_one()
+		self.squares = self.create_grid(10)
+		self.test_map_one()
 	
 	def get_square(self, coordinate_list):
 		return self.squares[coordinate_list[0]][coordinate_list[1]]
@@ -51,13 +52,13 @@ class Map(object):
 					square.terrain = CWE_terrain.Mountain(square)
 				if num >= 9 and num <= 10:
 					square.terrain = CWE_terrain.Road(square)
-		self.get_square([0,9]).add_terrain(Capitol(self.get_square([0,9]), self.player_list[0]))
-		self.get_square([9,0]).add_terrain(Capitol(self.get_square([0,0]), self.player_list[1]))
-		self.get_square([1,8]).add_unit(Unit("infantry.unit", square = self.get_square([1,8]), player = player_list[0]))
-		self.get_square([8,1]).add_unit(Unit("infantry.unit", square = self.get_square([8,1]), player = player_list[1]))
-		self.get_square([2,7]).add_terrain(Base(self.get_square([2,7])))
-		self.get_square([2,7]).add_terrain(Base(self.get_square([2,7]).player_list[0]))
-		self.get_square([2,7]).add_terrain(Base(self.get_square([2,7]).player_list[1]))
+		self.get_square([0,9]).add_terrain(CWE_terrain.Capitol(self.get_square([0,9]), self.player_list[0]))
+		self.get_square([9,0]).add_terrain(CWE_terrain.Capitol(self.get_square([9,0]), self.player_list[1]))
+		#self.get_square([1,8]).add_unit(Unit("infantry.unit", square = self.get_square([1,8]), player = player_list[0]))
+		#self.get_square([8,1]).add_unit(Unit("infantry.unit", square = self.get_square([8,1]), player = player_list[1]))
+		self.get_square([2,7]).add_terrain(CWE_terrain.Base(self.get_square([2,7])))
+		self.get_square([2,7]).add_terrain(CWE_terrain.Base(self.get_square([2,7]), self.player_list[0]))
+		self.get_square([2,7]).add_terrain(CWE_terrain.Base(self.get_square([2,7]), self.player_list[1]))
 		
 	
 	def create_grid(self, grid_width_and_height):
@@ -136,7 +137,13 @@ class Square(object):
 		self.unit = False
 		self.adjacent_squares = []
 		moove_num = 0
-		
+	
+	def distance_to(self, square):
+		for i in range(100):
+			if square.position in self.find_unrestricted_range(i):
+				return i
+		return false
+	
 	def add_unit(self, unit_instance):
 		if self.units != None:
 			self.unit = unit_instance
@@ -172,7 +179,7 @@ class Square(object):
 		for i in range(Range + 1):
 			for j in range(Range + 1 - i):
 				for coordinate in [(i,j), (-i,j), (-i,-j), (-i,j)]:
-					coordinates.add(coordinate)
+					coordinates.add((self.position[0] + coordinate[0], self.position[1] + coordinate[1]))
 		#make the coordinates stop repeating
 		return coordinates
 	
@@ -194,7 +201,8 @@ class Square(object):
 def code_check():
 	x = Map(["Player 1", "Player 2"])
 	y = 0
-	print "test of find_rage(1,3):", x.squares[3][3].find_range(1,3)
+	print "test of find_rage(1,3):", x.squares[3][3].find_unrestricted_range(1)
+	print "test of square.distance_to (should be 5) :", x.squares[3][3].distance_to(x.squares[6][5])
 	print "test of terrain population:"
 	for list_of_squares in x.squares:
 		for square in list_of_squares:
