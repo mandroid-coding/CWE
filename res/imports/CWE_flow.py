@@ -15,8 +15,13 @@ class Menu:
 class MenuOptions:
     
     #Will cause unit to attack another???
-    def attack(self,board):
-        pass
+    def attack(self,board,cord1,cord2):
+        aggressor = board.find_square(cord1).unit
+        defender = board.find_square(cord2).unit
+        
+        if(aggressor.attack(defender) and self.inAttackRange(board,cord1,cord2)):
+            defender.attack(aggressor)
+        
     
     #Unit capture functionality
     def capture(self,board):
@@ -42,14 +47,26 @@ class MenuOptions:
         return move_array
     
     #Get the range in which a unit can attack from current position
-    def getBombardHighlights(self,board):
+    def getRangeHighlights(self,board):
         unit = board.cursor_square().unit
 #FIX: no handling for missing unit
+        return board.cursor_square().find_range(unit.primary_range[0],unit.primary_range[1])
+    
+    def inAttackRange(self,board, agg_cords, def_cords):
+        unit = board.cursor_square().unit
+        x_dist = abs(agg_cords[0] - def_cords[0])
+        y_dist = abs(agg_cords[1] - def_cords[1])
+        return (((x_dist+y_dist) >= unit.primary_range[0]) and ((x_dist+y_dist) <= unit.primary_range[1]))
+    
+    def getAttackableCords(self,board):
+        range_array = self.getRangeHighlights(board)
+        
         target_array = []
-        for i in range(len(board.squares)):
-            for j in range(len(board.squares[i])):
-                if((i+j) >= unit.primary_range[0]) and ((i+j) <= (unit.primary_range[1])):
-                    target_array.append([i,j])
+        
+        for cords in range_array:
+            if board.find_square(cords).unit != None:
+                target_array.append(cords)
+        
         return target_array
     
     #Get the range in which a unit can move and the range in which it can attack from movable spaces
