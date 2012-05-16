@@ -117,11 +117,8 @@ class Unit:
         else:
             f = 0
         target.hp -= f
-        casualty = False
         if target.hp <= 0:
             target.die()
-            casualty = True
-        return casualty
     def die(self):
         self.square.remove_unit()
     #need functions: attack(), 
