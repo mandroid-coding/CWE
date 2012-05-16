@@ -57,7 +57,7 @@ class Beach(Terrain):
 		self.label = "Beach"
 		
 class Building(Terrain):
-	def __init__(self, square, defense, controller = False):
+	def __init__(self, square, defense, controller):
 		Terrain.__init__(square, defense)
 		self.HP = 20
 		self.controller = controller
@@ -69,24 +69,29 @@ class Building(Terrain):
 		if self.HP < 0 or self.HP == 0:
 			self.controller = unit.controller
 			self.HP = 20		
-		
+
+class Capitol(Building):
+	def __init__(self, square, controller = False)
+		Building.__init__(self, square, 4, controller)
+		self.label = "Capitol"
+	
 class City(Building):
-	def __init__(self, square, controller):
+	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 3, controller)
 		self.label = "City"
 		
 class Base(Building):
-	def __init__(self, square, controller):
+	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Base"
 		
 class Airport(Building):
-	def __init__(self, square, controller):
+	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Airport"
 		
 class Port(Building):
-	def __init__(self, square, controller):
+	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Port"
 
