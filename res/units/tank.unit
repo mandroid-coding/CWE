@@ -1,7 +1,7 @@
 Name	Tank
 Base_Cost	7000
 Max_HP	10
-Terrain_Costs	Bridge=1, Building=1, Sea=N/A, Beach=1, Mountain=N/A, Pipeline=N/A, Pipe_Seam=N/A, Plain=1, Reef=N/A, River=N/A, Road=1, Rough_Sea=N/A, Wood=2
+Move_Type	Treads
 Max_Fuel	70
 Move_Range	6
 Armor_Type	Tank

@@ -8,10 +8,10 @@ Armor_Type	Recon
 Primary_Name	N/A
 Secondary_Name	Machine gun
 Secondary_Range	(1,1)
-Secondary_Table Mech=70 Infatry=65, Recon=35, Tank=6, Medium_Tank=1, Neotank=1, Megatank=1, APC=45, Artillery=45, Rockets=55, Anti-Air=4, Missiles=28, Piperunner=6, B-Copter=10, T-Copter=35
+Secondary_Table	Mech=70, Infatry=65, Recon=35, Tank=6, Medium_Tank=1, Neotank=1, Megatank=1, APC=45, Artillery=45, Rockets=55, Anti-Air=4, Missiles=28, Piperunner=6, B-Copter=10, T-Copter=35
 Carry_Types	N/A
 Vision_Range	5
-Image_Name	Generic.gif
+Image_Name	Tank.gif
 Can_Stealth	False
 Can_Capture	False
 Can_Resupply	False

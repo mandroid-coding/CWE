@@ -1,13 +1,13 @@
 Name	Anti-Air
 Base_Cost	8000
 Max_HP	10
-Terrain_Costs	Bridge=1, Building=1, Sea=N/A, Beach=1, Mountain=N/A, Pipeline=N/A, Pipe_Seam=N/A, Plain=1, Reef=N/A, River=N/A, Road=1, Rough_Sea=N/A, Wood=2
+Move_Type	
 Max_Fuel	60
 Move_Range	6
 Armor_Type	Anti-Air
 Primary_Name	Vulcan
 Primary_Range	(1,1)
-Primary_Table	Infantry=105, Mech=105, Recon=60, Tank=25, Medium_Tank=10, Neotank=5 Megatank=1, APC=50, Artillery=50, Rockets=55, Anti-Air=45, Missiles=55, Piperunner=25, Battleship=55, Fighter=65, Bomber=75, Stealth=75, B-Copter=105, T-Copter=105
+Primary_Table	Infantry=105, Mech=105, Recon=60, Tank=25, Medium_Tank=10, Neotank=5, Megatank=1, APC=50, Artillery=50, Rockets=55, Anti-Air=45, Missiles=55, Piperunner=25, Battleship=55, Fighter=65, Bomber=75, Stealth=75, B-Copter=105, T-Copter=105
 Ammo	5
 Secondary_Name	N/A
 Carry_Types	N/A

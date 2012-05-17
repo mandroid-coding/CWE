@@ -1,7 +1,7 @@
 Name	Rockets
 Base_Cost	15000
 Max_HP	10
-Terrain_Costs	Bridge=1, Building=1, Sea=N/A, Beach=1, Mountain=N/A, Pipeline=N/A, Pipe_Seam=N/A, Plain=2, Reef=N/A, River=N/A, Road=1, Rough_Sea=N/A, Wood=3
+Move_Type	Tires
 Max_Fuel	50
 Move_Range	5
 Armor_Type	Rockets

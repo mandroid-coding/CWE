@@ -62,11 +62,11 @@ class Beach(Terrain):
 		self.color = "tan"
 		self.label = "Beach"
 	
-class Pipeline(Terrain):
+class Pipe(Terrain):
 	def __init__(self, square):
 		Terrain.__init__(self, square, 0)
 		self.color = "red"
-		self.label = "Pipeline"
+		self.label = "Pipe"
 	
 class Pipe_Seam(Terrain):
 	def __init__(self, square):

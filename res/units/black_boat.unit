@@ -1,14 +1,14 @@
-Name	APC
-Base_Cost	5000
+Name	Black Boat
+Base_Cost	7500
 Max_HP	10
-Move_Type	Treads
-Max_Fuel	70
-Move_Range	6
-Armor_Type	APC
+Move_Type	Transport
+Max_Fuel	60
+Move_Range	7
+Armor_Type	Black_Boat
 Primary_Name	N/A
 Secondary_Name	N/A
 Carry_Types	Infantry, Mech
-Carry_Count	1
+Carry_Count	2
 Vision_Range	1
 Image_Name	Tank.gif
 Can_Stealth	False

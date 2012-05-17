@@ -5,10 +5,10 @@ image_folder = os.path.join( resource_folder, "images" )
 unit_folder = os.path.join( resource_folder, "units" )
 class Unit:
 #Current kwargs are controller, and cost.
-    def __init__(self, filename = "", **kwargs):
-        if filename == "":#Default to the generic unit description.
-            filename = "generic.unit"
-        filepath = os.path.join( unit_folder, filename )#Import the unit from a file.
+    def __init__(self, typename = "", **kwargs):
+        if typename == "":#Default to the generic unit description.
+            typename = "generic.unit"
+        filepath = os.path.join( unit_folder, (typename + ".unit") )#Import the unit from a file.
         unit_source = open(filepath, "r")
         fields = {}
         for line in unit_source.readlines():
@@ -35,14 +35,152 @@ class Unit:
             self.square = None
         self.max_hp = int(fields["Max_HP"])
         self.hp = int(self.max_hp)
-        self.terrain_costs = {}
-        for item in fields["Terrain_Costs"].split(", "):
-            pair = item.split("=")
-            pair[0] = pair[0]
-            if pair[1] == "N/A":
-                self.terrain_costs[ pair[0] ] = "n/a"
-            else:
-                self.terrain_costs[ pair[0] ] = int(pair[1])
+        self.move_type = fields["Move_Type"]
+        x = self.move_type
+        if x == "Air": self.terrain_costs = {
+        "Airport":1,
+        "Base":1,
+        "Bridge":1,
+        "Beach":1,
+        "Capitol":1,
+        "City":1,
+        "Forest":1,
+        "Mountain":1,
+        "Pipeline":"N/A",
+        "Pipe_Seam":"N/A",
+        "Plains":1,
+        "Port":1,
+        "Reef":1,
+        "River":1,
+        "Road":1,
+        "Sea":1,
+        }
+        elif x == "Infantry": self.terrain_costs = {
+        "Airport":1,
+        "Base":1,
+        "Bridge":1,
+        "Beach":1,
+        "Capitol":1,
+        "City":1,
+        "Forest":1,
+        "Mountain":2,
+        "Pipeline":"N/A",
+        "Pipe_Seam":"N/A",
+        "Plains":1,
+        "Port":1,
+        "Reef":"N/A",
+        "River":2,
+        "Road":1,
+        "Sea":"N/A",
+        }
+        elif x == "Mech": self.terrain_costs = {
+        "Airport":1,
+        "Base":1,
+        "Bridge":1,
+        "Beach":1,
+        "Capitol":1,
+        "City":1,
+        "Forest":1,
+        "Mountain":1,
+        "Pipeline":"N/A",
+        "Pipe_Seam":"N/A",
+        "Plains":1,
+        "Port":1,
+        "Reef":"N/A",
+        "River":1,
+        "Road":1,
+        "Sea":"N/A",
+        }
+        elif x == "Pipe": self.terrain_costs = {
+        "Airport":"N/A",
+        "Base":1,
+        "Bridge":"N/A",
+        "Beach":"N/A",
+        "Capitol":"N/A",
+        "City":"N/A",
+        "Forest":"N/A",
+        "Mountain":"N/A",
+        "Pipeline":1,
+        "Pipe_Seam":1,
+        "Plains":"N/A",
+        "Port":"N/A",
+        "Reef":"N/A",
+        "River":"N/A",
+        "Road":"N/A",
+        "Sea":"N/A",
+        }
+        elif x == "Ship": self.terrain_costs = {
+        "Airport":"N/A",
+        "Base":"N/A",
+        "Bridge":"N/A",
+        "Beach":"N/A",
+        "Capitol":"N/A",
+        "City":"N/A",
+        "Forest":"N/A",
+        "Mountain":"N/A",
+        "Pipeline":"N/A",
+        "Pipe_Seam":"N/A",
+        "Plains":"N/A",
+        "Port":1,
+        "Reef":2,
+        "River":"N/A",
+        "Road":"N/A",
+        "Sea":1,
+        }
+        elif x == "Tires": self.terrain_costs = {
+        "Airport":1,
+        "Base":1,
+        "Bridge":1,
+        "Beach":1,
+        "Capitol":1,
+        "City":1,
+        "Forest":3,
+        "Mountain":"N/A",
+        "Pipeline":"N/A",
+        "Pipe_Seam":"N/A",
+        "Plains":2,
+        "Port":1,
+        "Reef":"N/A",
+        "River":"N/A",
+        "Road":1,
+        "Sea":"N/A",
+        }
+        elif x == "Transport": self.terrain_costs = {
+        "Airport":"N/A",
+        "Base":"N/A",
+        "Bridge":"N/A",
+        "Beach":1,
+        "Capitol":"N/A",
+        "City":"N/A",
+        "Forest":"N/A",
+        "Mountain":"N/A",
+        "Pipeline":"N/A",
+        "Pipe_Seam":"N/A",
+        "Plains":"N/A",
+        "Port":1,
+        "Reef":2,
+        "River":"N/A",
+        "Road":"N/A",
+        "Sea":1,
+        }
+        elif x == "Treads": self.terrain_costs = {
+        "Airport":1,
+        "Base":1,
+        "Bridge":1,
+        "Beach":1,
+        "Capitol":1,
+        "City":1,
+        "Forest":2,
+        "Mountain":"N/A",
+        "Pipeline":"N/A",
+        "Pipe_Seam":"N/A",
+        "Plains":1,
+        "Port":1,
+        "Reef":"N/A",
+        "River":"N/A",
+        "Road":1,
+        "Sea":"N/A",
+        }
         self.max_fuel = int(fields["Max_Fuel"])
         self.fuel = self.max_fuel
         self.move_range = int(fields["Move_Range"])
@@ -120,3 +258,10 @@ class Unit:
         return survived
     def die(self):
         self.square.remove_unit()
+total_unit_types = set( "infantry, mech, recon, tank, medium_tank, neotank, megatank, apc, artillery, rockets, anti-air, piperunner, lander, cruiser, submarine, battleship, carrier, black_boat, b-copter, t-copter, fighter, bomber, stealth".split(", ") )
+if __name__ == "__main__":
+    unit_list = set()
+    for item in total_unit_types:
+        unit_list.add( Unit(item) )
+    for item in unit_list:
+        print str(unit)
