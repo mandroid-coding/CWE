@@ -1,6 +1,6 @@
 import os.path
 
-resource_folder = os.path.join( os.path.pardir, "res" )
+resource_folder = os.path.pardir
 image_folder = os.path.join( resource_folder, "images" )
 unit_folder = os.path.join( resource_folder, "units" )
 class Unit:
@@ -52,18 +52,18 @@ class Unit:
             range_tuple = fields["Primary_Range"][1:-1].split(",")
             self.primary_range = ( int(range_tuple[0]), int(range_tuple[1]) )
             self.primary_table = {}
-            for pair in fields["Primary_Table"].split(", "):
+            for pair in fields["Primary_Table"].split(","):
                 realpair = pair.split("=")
-                primary_table[ realpair[0] ] = int(realpair[1])
+                self.primary_table[ realpair[0] ] = int(realpair[1])
             self.ammo = int(fields["Ammo"])
         self.secondary_name = fields["Secondary_Name"]
-        if self.secondary_name == "N/A":
-            range_tuple = fields["Secondary_Range"][1,-1].split(", ")
+        if self.secondary_name != "N/A":
+            range_tuple = fields["Secondary_Range"][1:-1].split(",")
             self.secondary_range = ( int(range_tuple[0]), int(range_tuple[1]) )
             self.secondary_table = {}
             for pair in fields["Secondary_Table"].split(", "):
                 realpair = pair.split("=")
-                secondary_table[ realpair[0] ] = int(realpair[1])
+                self.secondary_table[ realpair[0] ] = int(realpair[1])
         self.carry_types = fields["Carry_Types"].split(", ")
         if self.carry_types != ["N/A"]:
             self.carry_count = int(fields["Carry_Count"])
@@ -99,7 +99,7 @@ class Unit:
         if self.primary_name != "N/A":
             if (self.ammo > 0) and (target.armor_type in self.primary_table) and ( distance >= self.primary_range[0] ) and ( distance <= self.primary_range[1] ):
                 b = self.primary_table[ target.armor_type ]
-                a = double(self.hp)/self.max_hp
+                a = float(self.hp)/self.max_hp
                 r = target.square.terrain.defense
                 t = ( b * a * 0.1 )
                 h = ((target.max_hp - target.hp) / target.max_hp) * 100
@@ -107,7 +107,7 @@ class Unit:
         elif self.secondary_name != "N/A":
             if (target.armor_type in self.secondary_table) and ( distance >= self.secondary_range[0] ) and ( distance <= self.secondary_range[1] ):
                 b = self.secondary_table[ target.armor_type ]
-                a = double(self.hp)/self.max_hp
+                a = float(self.hp)/self.max_hp
                 r = target.square.terrain.defense
                 t = ( b * a * 0.1 )
                 h = ((target.max_hp - target.hp) / target.max_hp) * 100
