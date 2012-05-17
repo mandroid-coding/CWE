@@ -151,8 +151,8 @@ class Square(object):
 			return False
 		
 	def remove_unit(self):
-		if self.unit != None:
-			self.unit = None
+		if self.unit != False:
+			self.unit = False
 			return True
 		else:
 			return False
