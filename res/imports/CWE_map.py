@@ -17,10 +17,10 @@ class UnitError(Exception):
 
 class Map(object):
 	
-	def __init__(self, players):
+	def __init__(self, players_list):
 		self.squares = []
 		self.cursor = [0, 0]
-		self.player_list = players
+		self.player_list = players_list
 		self.turn_count = 0
 		self.units = set()
 		self.buildings = set()
@@ -144,15 +144,16 @@ class Square(object):
 		return false
 	
 	def add_unit(self, unit_instance):
-		if self.unit != None:
+		if self.unit != False:
 			self.unit = unit_instance
-			
-		elif self.units == None:
+			return true
+		elif self.unit == False:
 			return False
 		
 	def remove_unit(self):
 		if self.unit != None:
-			self.unit = none
+			self.unit = None
+			return True
 		else:
 			return False
 			#raise UnitError("A unit was not on the square yet remove_unit was called on the square...")
