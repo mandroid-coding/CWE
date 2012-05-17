@@ -1,6 +1,6 @@
 import random
 import CWE_terrain
-#import CWE_Units
+import CWE_units
 
 class CursorError(Exception):
 	def __init__(self, Value):
@@ -29,8 +29,7 @@ class Map(object):
 	
 	def get_square(self, coordinate_list):
 		return self.squares[coordinate_list[0]][coordinate_list[1]]
-	
-#	def initialize_terrain(square, 
+ 
 	def refresh_units(self):
 		for unit in self.units:
 			if unit.player == self.current_player:
@@ -54,8 +53,8 @@ class Map(object):
 					square.terrain = CWE_terrain.Road(square)
 		self.get_square([0,9]).add_terrain(CWE_terrain.Capitol(self.get_square([0,9]), self.player_list[0]))
 		self.get_square([9,0]).add_terrain(CWE_terrain.Capitol(self.get_square([9,0]), self.player_list[1]))
-		#self.get_square([1,8]).add_unit(Unit("infantry.unit", square = self.get_square([1,8]), player = player_list[0]))
-		#self.get_square([8,1]).add_unit(Unit("infantry.unit", square = self.get_square([8,1]), player = player_list[1]))
+		self.get_square([1,8]).add_unit(CWE_units.Unit("infantry.unit", square = self.get_square([1,8]), player = self.player_list[0]))
+		self.get_square([8,1]).add_unit(CWE_units.Unit("infantry.unit", square = self.get_square([8,1]), player = self.player_list[1]))
 		self.get_square([2,7]).add_terrain(CWE_terrain.Base(self.get_square([2,7])))
 		self.get_square([4,5]).add_terrain(CWE_terrain.Base(self.get_square([4,5]), self.player_list[0]))
 		self.get_square([7,2]).add_terrain(CWE_terrain.Base(self.get_square([7,2]), self.player_list[1]))
