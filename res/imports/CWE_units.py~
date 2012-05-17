@@ -96,14 +96,13 @@ class Unit:
     def attack(self, target):#Return true/false
         damage = 0
         distance = self.square.distance_to(target.square)
-        if self.primary_name != "N/A":
-            if (self.ammo > 0) and (target.armor_type in self.primary_table) and ( distance >= self.primary_range[0] ) and ( distance <= self.primary_range[1] ):
-                b = self.primary_table[ target.armor_type ]
-                a = float(self.hp)/self.max_hp
-                r = target.square.terrain.defense
-                t = ( b * a * 0.1 )
-                h = ((target.max_hp - target.hp) / target.max_hp) * 100
-                f = t - (r * ( (t * 0.1) - (h * t * 0.1) ) )
+        if self.primary_name != "N/A" and (self.ammo > 0) and (target.armor_type in self.primary_table) and ( distance >= self.primary_range[0] ) and ( distance <= self.primary_range[1] ):
+            b = self.primary_table[ target.armor_type ]
+            a = float(self.hp)/self.max_hp
+            r = target.square.terrain.defense
+            t = ( b * a * 0.1 )
+            h = ((target.max_hp - target.hp) / target.max_hp) * 100
+            f = t - (r * ( (t * 0.1) - (h * t * 0.1) ) )
         elif self.secondary_name != "N/A":
             if (target.armor_type in self.secondary_table) and ( distance >= self.secondary_range[0] ) and ( distance <= self.secondary_range[1] ):
                 b = self.secondary_table[ target.armor_type ]
