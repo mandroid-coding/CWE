@@ -144,7 +144,7 @@ class Square(object):
 		return false
 	
 	def add_unit(self, unit_instance):
-		if self.units != None:
+		if self.unit != None:
 			self.unit = unit_instance
 			
 		elif self.units == None:
