@@ -1,8 +1,6 @@
 import os.path
 
-
-project_root = os.path.curdir
-resource_folder = os.path.join( project_root, "res" )
+resource_folder = os.path.join( os.path.pardir, "res" )
 image_folder = os.path.join( resource_folder, "images" )
 unit_folder = os.path.join( resource_folder, "units" )
 class Unit:
