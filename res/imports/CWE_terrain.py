@@ -90,7 +90,7 @@ class Building(Terrain):
 		Terrain.__init__(self, square, defense)
 		self.HP = 20
 		self.controller = controller
-		
+		self.color = "grey20"
 	def capture(self, unit):
 		if self.controller == unit.controller:
 			return False

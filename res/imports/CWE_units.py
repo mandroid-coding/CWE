@@ -2,15 +2,18 @@
 #it must change its armor type to "Stealthed_X"
 #For example, Stealthed_Sub
 import os.path
-
-resource_folder = os.path.pardir
+from CWE_units import __file__
+module_folder = os.path.dirname( __file__ )
+resource_folder = os.path.abspath( os.path.join( module_folder, os.path.pardir) )
 unit_folder = os.path.join( resource_folder, "units" )
 class Unit:
 #Current kwargs are controller, and cost.
     def __init__(self, typename = "", **kwargs):
-        if typename == "":#Default to the generic unit description.
+        #Default to the generic unit description.
+        if typename == "":
             typename = "generic"
-        filepath = os.path.join( unit_folder, (typename + ".unit") )#Import the unit from a file.
+        #Import the unit from a file.
+        filepath = os.path.join( unit_folder, (typename + ".unit") )
         unit_source = open(filepath, "r")
         fields = {}
         for line in unit_source.readlines():
