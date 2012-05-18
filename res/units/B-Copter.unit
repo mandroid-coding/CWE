@@ -1,7 +1,7 @@
 Name	B-Copter
 Base_Cost	9000
 Max_HP	10
-Move_Type	Air
+Move_Type	Copter
 Max_Fuel	99
 Move_Range	6
 Armor_Type	B-Copter

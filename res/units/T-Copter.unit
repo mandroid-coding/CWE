@@ -1,7 +1,7 @@
 Name	T-Copter
 Base_Cost	5000
 Max_HP	10
-Move_Type	Air
+Move_Type	Copter
 Max_Fuel	99
 Move_Range	6
 Armor_Type	T-Copter
