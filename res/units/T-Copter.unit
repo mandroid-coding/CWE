@@ -1,0 +1,19 @@
+Name	T-Copter
+Base_Cost	5000
+Max_HP	10
+Move_Type	Air
+Max_Fuel	99
+Move_Range	6
+Armor_Type	T-Copter
+Primary_Name	N/A
+Secondary_Name	N/A
+Carry_Types	Infantry, Mech
+Carry_Count	1
+Vision_Range	2
+Image_Type	t-copter
+Can_Stealth	False
+Can_Capture	False
+Can_Resupply	False
+Can_Launch	False
+Can_Explode	False
+Can_Repair	False

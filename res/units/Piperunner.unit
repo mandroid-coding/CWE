@@ -1,0 +1,21 @@
+Name	Piperunner
+Base_Cost	20000
+Max_HP	10
+Move_Type	Pipe
+Max_Fuel	99
+Move_Range	9
+Armor_Type	Piperunner
+Primary_Name	Pipe Cannon
+Primary_Range	(2,5)
+Primary_Table	Infantry=95, Mech=90, Recon=90, Tank=80, Medium_Tank=55, Neotank=50, Megatank=25, APC=80, Artillery=80, Rockets=85, Anti-Air=85, Missiles=90, Piperunner=80, Fighter=65, Bomber=75, Stealth=75, B-Copter=105, T-Copter=105, Battleship=55, Cruiser=60, Lander=60, Sub=85, Black_Boat=60, Carrier=60
+Ammo	9
+Secondary_Name	N/A
+Vision_Range	4
+Image_Type	piperunner
+Carry_Types	N/A
+Can_Stealth	False
+Can_Capture	False
+Can_Resupply	False
+Can_Launch	False
+Can_Explode	False
+Can_Repair	False

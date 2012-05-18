@@ -1,17 +1,20 @@
+#Important note!  When a unit stealths,
+#it must change its armor type to "Stealthed_X"
+#For example, Stealthed_Sub
 import os.path
 
 resource_folder = os.path.pardir
-image_folder = os.path.join( resource_folder, "images" )
 unit_folder = os.path.join( resource_folder, "units" )
 class Unit:
 #Current kwargs are controller, and cost.
     def __init__(self, typename = "", **kwargs):
         if typename == "":#Default to the generic unit description.
-            typename = "generic.unit"
+            typename = "generic"
         filepath = os.path.join( unit_folder, (typename + ".unit") )#Import the unit from a file.
         unit_source = open(filepath, "r")
         fields = {}
         for line in unit_source.readlines():
+            if line[0] == "#": continue
             parsed_line = line.strip().split("\t")
             fields[ parsed_line[0] ] = parsed_line[1]
 
@@ -181,6 +184,8 @@ class Unit:
         "Road":1,
         "Sea":"N/A",
         }
+        else:
+            raise Exception("Unrecognized movement type: {}".format(x))
         self.max_fuel = int(fields["Max_Fuel"])
         self.fuel = self.max_fuel
         self.move_range = int(fields["Move_Range"])
@@ -190,7 +195,7 @@ class Unit:
             range_tuple = fields["Primary_Range"][1:-1].split(",")
             self.primary_range = ( int(range_tuple[0]), int(range_tuple[1]) )
             self.primary_table = {}
-            for pair in fields["Primary_Table"].split(","):
+            for pair in fields["Primary_Table"].split(", "):
                 realpair = pair.split("=")
                 self.primary_table[ realpair[0] ] = int(realpair[1])
             self.ammo = int(fields["Ammo"])
@@ -208,8 +213,8 @@ class Unit:
         else:
             self.carry_types = []
         self.vision_range = int(fields["Vision_Range"])
-        self.image_name = fields["Image_Name"]
-        if fields["Can_Stealth"] == "True":#They insisted that these "Can_X" be this way, and I was already drained enough from trying to convince them that hard-coding unit definitions for 20+ units is a Bad Idea
+        self.image_type = fields["Image_Type"]
+        if fields["Can_Stealth"] == "True":
             self.can_stealth = True
         else:
             self.can_stealth = False
@@ -229,6 +234,10 @@ class Unit:
             self.can_explode = True
         else:
             self.can_explode = False
+        if fields["Can_Repair"] == "True":
+            self.can_repair = True
+        else:
+            self.can_repair = False
     def __str__(self):
         return self.name
     def attack(self, target):#Return true/false
@@ -241,7 +250,10 @@ class Unit:
             t = ( b * a * 0.1 )
             h = ((target.max_hp - target.hp) / target.max_hp) * 100
             f = t - (r * ( (t * 0.1) - (h * t * 0.1) ) )
-        elif self.secondary_name != "N/A" and (target.armor_type in self.secondary_table) and ( distance >= self.secondary_range[0] ) and ( distance <= self.secondary_range[1] ):
+        elif self.secondary_name != "N/A"\
+        and (target.armor_type in self.secondary_table)\
+        and ( distance >= self.secondary_range[0] )\
+        and ( distance <= self.secondary_range[1] ):
             b = self.secondary_table[ target.armor_type ]
             a = float(self.hp)/self.max_hp
             r = target.square.terrain.defense
@@ -258,10 +270,30 @@ class Unit:
         return survived
     def die(self):
         self.square.remove_unit()
-total_unit_types = set( "infantry, mech, recon, tank, medium_tank, neotank, megatank, apc, artillery, rockets, anti-air, piperunner, lander, cruiser, submarine, battleship, carrier, black_boat, b-copter, t-copter, fighter, bomber, stealth".split(", ") )
+total_unit_types = set(
+    ("Infantry, Mech, Recon, Tank, Medium_Tank, Neotank, Megatank, APC, "+
+     "Artillery, Rockets, Anti-Air, Missiles, Piperunner, Fighter, "+
+     "Bomber, Stealth, B-Copter, T-Copter, Battleship, Cruiser, Lander, "+
+     "Sub, Black_Boat, Carrier").split(", ")
+                        )
 if __name__ == "__main__":
     unit_list = set()
-    for item in total_unit_types:
-        unit_list.add( Unit(item) )
-    for item in unit_list:
-        print str(unit)
+    missing_images = set()
+    for unit_type in total_unit_types:
+        current = Unit(unit_type)
+        unit_list.add( current )
+        print str(current), " -- initialization successful "
+        print current.name
+        for color in ["orange", "blue"]:
+            filename = os.path.join( resource_folder,\
+            "images", "{color}_{unit_type}.gif".format\
+            (color=color, unit_type=current.image_type) )
+            if not os.path.exists( filename ):
+                print ( ("{color} {unit_type} image not found at expected"+
+                " directory {directory}").format( color=color,\
+                unit_type=current.image_type, directory=filename ) )
+                missing_images.add( str(filename) )
+            else:
+                print "Unit has an image (OK!)"
+    for file_name in missing_images:
+        print file_name

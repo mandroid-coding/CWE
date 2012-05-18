@@ -12,9 +12,10 @@ Ammo	5
 Secondary_Name	N/A
 Carry_Types	N/A
 Vision_Range	2
-Image_Name	Tank.gif
+Image_Type	anti-air
 Can_Stealth	False
 Can_Capture	False
 Can_Resupply	False
 Can_Launch	False
 Can_Explode	False
+Can_Repair	False

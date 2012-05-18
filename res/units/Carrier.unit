@@ -1,0 +1,22 @@
+Name	Carrier
+Base_Cost	30000
+Max_HP	10
+Move_Type	Ship
+Max_Fuel	99
+Move_Range	5
+Armor_Type	Carrier
+Primary_Name	Missiles
+Primary_Range	(3,8)
+Primary_Table	Fighter=100, Bomber=100, Stealth=100, B-Copter=115, T-Copter=115
+Ammo	9
+Secondary_Name	N/A
+Carry_Types	Fighter, Bomber, Stealth, B-Copter, T-Copter
+Carry_Count	2
+Vision_Range	4
+Image_Type	carrier
+Can_Stealth	False
+Can_Capture	False
+Can_Resupply	False
+Can_Launch	False
+Can_Explode	False
+Can_Repair	False

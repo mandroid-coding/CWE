@@ -10,9 +10,10 @@ Secondary_Name	N/A
 Carry_Types	Infantry, Mech
 Carry_Count	2
 Vision_Range	1
-Image_Name	Tank.gif
+Image_Type	black_boat
 Can_Stealth	False
 Can_Capture	False
 Can_Resupply	True
 Can_Launch	False
 Can_Explode	False
+Can_Repair	True

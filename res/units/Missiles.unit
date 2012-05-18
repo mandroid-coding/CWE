@@ -1,0 +1,21 @@
+Name	Missiles
+Base_Cost	12000
+Max_HP	10
+Move_Type	Tires
+Max_Fuel	99
+Move_Range	6
+Armor_Type	Missiles
+Primary_Name	Missiles
+Primary_Range	(1,1)
+Primary_Table	Fighter=100, Bomber=100, Stealth=100, B-Copter=105, T-Copter=105
+Ammo	9
+Secondary_Name	N/A
+Carry_Types	N/A
+Vision_Range	5
+Image_Type	missiles
+Can_Stealth	False
+Can_Capture	False
+Can_Resupply	False
+Can_Launch	False
+Can_Explode	False
+Can_Repair	False

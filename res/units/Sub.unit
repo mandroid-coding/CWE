@@ -1,0 +1,21 @@
+Name	Submarine
+Base_Cost	20000
+Max_HP	10
+Move_Type	Ship
+Max_Fuel	99
+Move_Range	5
+Armor_Type	Sub
+Primary_Name	Torpedoes
+Primary_Range	(1,1)
+Primary_Table	Battleship=65, Cruiser=25, Lander=95, Sub=55, Stealthed_Sub=55, Black_Boat=95, Carrier=75
+Ammo	6
+Secondary_Name	N/A
+Carry_Types	N/A
+Vision_Range	5
+Image_Type	submarine
+Can_Stealth	True
+Can_Capture	False
+Can_Resupply	False
+Can_Launch	False
+Can_Explode	False
+Can_Repair	False
