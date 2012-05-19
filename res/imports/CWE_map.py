@@ -145,8 +145,8 @@ class Square(object):
 		
 	#self.get_square([1,8]).add_unit(CWE_units.Unit("infantry", square = self.get_square([1,8]), player = self.player_list[0]))
 	
-	def create_unit(self, file_name):
-		self.add_unit(CWE_units.Unit(file_name, square = self, player = self.Map.current_player))
+	def create_unit(self, unit_type):
+		self.add_unit(CWE_units.Unit(unit_type, square = self, player = self.Map.current_player))
 	
 	def add_unit(self, unit_instance):
 		if self.unit != False:
