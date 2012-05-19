@@ -124,4 +124,4 @@ class Port(Building):
 	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Port"
-	
+	    
