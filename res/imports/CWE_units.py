@@ -11,7 +11,7 @@ class Unit:
     def __init__(self, typename = "", **kwargs):
         #Default to the generic unit description (a mech).
         if typename == "":
-            typename = "generic"
+            typename = "Generic"
         #Import the unit from a file.
         filepath = os.path.join( unit_folder, (typename + ".unit") )
         unit_source = open(filepath, "r")
