@@ -1,0 +1,19 @@
+Name	Black Boat
+Base_Cost	7500
+Max_HP	10
+Move_Type	Transport
+Max_Fuel	60
+Move_Range	7
+Armor_Type	Black_Boat
+Primary_Name	N/A
+Secondary_Name	N/A
+Carry_Types	Infantry, Mech
+Carry_Count	2
+Vision_Range	1
+Image_Type	black_boat
+Can_Stealth	False
+Can_Capture	False
+Can_Resupply	True
+Can_Launch	False
+Can_Explode	False
+Can_Repair	True
