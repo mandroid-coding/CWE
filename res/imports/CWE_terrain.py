@@ -91,6 +91,7 @@ class Building(Terrain):
 		self.HP = 20
 		self.controller = controller
 		self.color = "grey20"
+		self.unit_list = set()
 	def capture(self, unit):
 		if self.controller == unit.controller:
 			return False
@@ -114,14 +115,21 @@ class Base(Building):
 	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Base"
-	
+		self.unit_list = set(
+		("Anti-Air, APC, Artillery, Infantry, Mech, Medium_Tank, Megatank, " +
+		"Missiles, Neotank, Piperunner, Recon, Rockets, Tank").split(", ")
+		)
 class Airport(Building):
 	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Airport"
-	
+		self.unit_list = set(
+		"B-Copter, Bomber, Fighter, Stealth, T-Copter".split(", ")
+		)
 class Port(Building):
 	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Port"
-	    
+		self.unit_list = set(
+		"Battleship, Black_Boat, Carrier, Cruiser, Lander, Sub".split(", ")
+		)
