@@ -13,14 +13,26 @@ class UnitError(Exception):
 		self.value = Value
 	def __str__(self):
 		return str(self.value)
-		
+
+class Player(object):
+	def __init__(self, name):
+		self.name = name
+		self.funds = 0
+	
+	def salary(self):
+		return self.funds
+	
+	def change_money(self, amount):
+		if self.funds + amount < 0:
+			return false
+		elif self.funds + amount >= 0:
+			return true
 
 class Map(object):
-	
-	def __init__(self, players_list):
+	def __init__(self):
 		self.squares = []
 		self.cursor = [0, 0]
-		self.player_list = players_list
+		self.player_list = [Player("player 1"), Player("player 2")] 
 		self.turn_count = 0
 		self.units = set()
 		self.buildings = set()
@@ -204,7 +216,7 @@ class Square(object):
 			
 # PLEASE NOTE THAT THESE DON'T WORK PROPERLY, PLEASE DON'T RELY ON THEM
 def code_check():
-	x = Map(["Player 1", "Player 2"])
+	x = Map()
 	y = 0
 	print "test of find_rage(1,3):", x.squares[3][3].find_unrestricted_range(1)
 	print "test of square.distance_to (should be 5) :", x.squares[3][3].distance_to(x.squares[6][5])
