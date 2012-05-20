@@ -138,11 +138,13 @@ class Square(object):
 		moove_num = 0
 	
 	def distance_to(self, square):
-		for i in range(100):
-			if square.position in self.find_unrestricted_range(i):
-				return i
-		return false
-		
+	#	for i in range(100):
+	#		if square.position in self.find_unrestricted_range(i):
+	#			return i
+	#	return false
+		x_distance = abs( self.position[0] - square.position[0] )
+		y_distance = abs( self.position[1] - square.position[1] )
+		return x_distance + y_distance
 	#self.get_square([1,8]).add_unit(CWE_units.Unit("(Infantry", square = self.get_square([1,8]), player = self.player_list[0]))
 	
 	def create_unit(self, unit_type):
@@ -201,7 +203,10 @@ class Square(object):
 				coordinates.remove(pair)
 		return coordinates
 		#squares = self.coord_to_square(coordinates)
-			
+	def can_build(self):
+		if isinstance( self.terrain, CWE_terrain.Building ) and self.terrain.unit_list != set():
+			return self.terrain.unit_list
+		else: return false
 # PLEASE NOTE THAT THESE DON'T WORK PROPERLY, PLEASE DON'T RELY ON THEM
 def code_check():
 	x = Map(["Player 1", "Player 2"])
