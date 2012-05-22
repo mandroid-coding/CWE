@@ -24,9 +24,9 @@ class Player(object):
 	
 	def change_money(self, amount):
 		if self.funds + amount < 0:
-			return false
+			return False
 		elif self.funds + amount >= 0:
-			return true
+			return True
 
 class Map(object):
 	def __init__(self, player_list = ["Player 1", "Player 2"]):
@@ -43,7 +43,12 @@ class Map(object):
 		self.buildings = set()
 		self.squares = self.create_grid(10)
 		self.test_map_one()
-	
+		self.repair_types = {\
+		"Port": ["Ship", "Transport"],\
+		"Airport": ["Air", "Copter"],\
+		"City": ["Tires", "Treads", "Infantry", "Mech"],\
+		"Base": ["Tires", "Treads", "Pipe", "Infantry", "Mech"],\
+		"Capitol": ["Tires", "Treads", "Infantry", "Mech"] }
 	def get_square(self, coordinate_list):
 		return self.squares[coordinate_list[0]][coordinate_list[1]]
  
@@ -96,11 +101,11 @@ class Map(object):
 	
 	def remove_unit(self, coordinates):
 		unit_instance = self.find_square(coordinates).unit
-		self.find_square(coordinates).unit = False
+		self.find_square(coordinates).unit = None
 		self.units.remove(unit_instance)
 	
 	def move_unit(self, unit , fst_coordinates, end_coordinates):
-		if self.find_square(end_coordinates).unit == False:
+		if self.find_square(end_coordinates).unit == None:
 			self.find_square(end_coordinates) == unit
 			if hasattr(self.find_square(fst_coordinates).terrain, "HP"):
 				self.find_square(fst_coordinates).terrain.HP = 20
@@ -148,11 +153,11 @@ class Square(object):
 	def __init__(self, Map,  Position):
 		self.Map = Map
 		self.position = Position
-		self.initial_terrain = False
-		self.terrain = False
-		self.unit = False
+		self.initial_terrain = None
+		self.terrain = None
+		self.unit = None
 		self.adjacent_squares = []
-		moove_num = 0
+		
 	
 	def distance_to(self, square):
 	#	for i in range(100):
@@ -168,15 +173,15 @@ class Square(object):
 		self.add_unit(CWE_units.Unit(unit_type, square = self, player = self.Map.current_player))
 	
 	def add_unit(self, unit_instance):
-		if self.unit != False:
+		if self.unit != None:
 			self.unit = unit_instance
-			return true
-		elif self.unit == False:
+			return True
+		elif self.unit == None:
 			return False
 		
 	def remove_unit(self):
-		if self.unit != False:
-			self.unit = False
+		if self.unit != None:
+			self.unit = None
 			return True
 		else:
 			return False
@@ -223,7 +228,7 @@ class Square(object):
 	def can_build(self):
 		if isinstance( self.terrain, CWE_terrain.Building ) and self.terrain.unit_list != set():
 			return self.terrain.unit_list
-		else: return false
+		else: return False
 # PLEASE NOTE THAT THESE DON'T WORK PROPERLY, PLEASE DON'T RELY ON THEM
 def code_check():
 	x = Map()

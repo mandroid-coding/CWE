@@ -92,27 +92,29 @@ class Building(Terrain):
 		self.controller = controller
 		self.color = "grey20"
 		self.unit_list = set()
+		self.being_captured = False
 	def capture(self, unit):
 		if self.controller == unit.controller:
 			return False
 		self.HP -= unit.hp
+		self.being_captured = True
 		if self.HP < 0 or self.HP == 0:
 			self.controller = unit.controller
 			self.HP = 20
-	
+	        self.being_captured = False
 
 class Capitol(Building):
-	def __init__(self, square, controller = False):
+	def __init__(self, square, controller = None):
 		Building.__init__(self, square, 4, controller)
 		self.label = "Capitol"
 	
 class City(Building):
-	def __init__(self, square, controller = False):
+	def __init__(self, square, controller = None):
 		Building.__init__(self, square, 3, controller)
 		self.label = "City"
 	
 class Base(Building):
-	def __init__(self, square, controller = False):
+	def __init__(self, square, controller = None):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Base"
 		self.unit_list = set(
@@ -120,14 +122,14 @@ class Base(Building):
 		"Missiles, Neotank, Piperunner, Recon, Rockets, Tank").split(", ")
 		)
 class Airport(Building):
-	def __init__(self, square, controller = False):
+	def __init__(self, square, controller = None):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Airport"
 		self.unit_list = set(
 		"B-Copter, Bomber, Fighter, Stealth, T-Copter".split(", ")
 		)
 class Port(Building):
-	def __init__(self, square, controller = False):
+	def __init__(self, square, controller = None):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Port"
 		self.unit_list = set(
