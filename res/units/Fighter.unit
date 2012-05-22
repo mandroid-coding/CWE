@@ -1,0 +1,21 @@
+Name	Fighter
+Base_Cost	20000
+Max_HP	10
+Move_Type	Air
+Max_Fuel	99
+Move_Range	9
+Armor_Type	Fighter
+Primary_Name	Missiles
+Primary_Range	(1,1)
+Primary_Table	Fighter=55, Bomber=100, Stealth=85, Stealthed_Stealth=85, B-Copter=120, T-Copter=120
+Ammo	9
+Secondary_Name	N/A
+Carry_Types	N/A
+Vision_Range	2
+Image_Type	fighter
+Can_Stealth	False
+Can_Capture	False
+Can_Resupply	False
+Can_Launch	False
+Can_Explode	False
+Can_Repair	False

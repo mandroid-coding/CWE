@@ -1,0 +1,23 @@
+Name	Medium Tank
+Base_Cost	16000
+Max_HP	10
+Move_Type	Treads
+Max_Fuel	50
+Move_Range	5
+Armor_Type	Medium_Tank
+Primary_Name	Cannon
+Primary_Range	(1,1)
+Primary_Table	Recon=105, Tank=85, Medium_Tank=55, Neotank=45, Megatank=25, APC=105, Artillery=105, Rockets=105, Anti-Air=105, Missiles=105, Piperunner=85, Battleship=10, Cruiser=30, Lander=35, Sub=10, Black_Boat=35, Carrier=10
+Ammo	8
+Secondary_Name	Machine gun
+Secondary_Range	(1,1)
+Secondary_Table	Infantry=105, Mech=95, Recon=45, Tank=8, Medium_Tank=1, Neotank=1, Megatank=1, APC=45, Artillery=45, Rockets=55, Anti-Air=7, Missiles=35, Piperunner=8, B-Copter=12, T-Copter=45
+Carry_Types	N/A
+Vision_Range	1
+Image_Type	medium_tank
+Can_Stealth	False
+Can_Capture	False
+Can_Resupply	False
+Can_Launch	False
+Can_Explode	False
+Can_Repair	False

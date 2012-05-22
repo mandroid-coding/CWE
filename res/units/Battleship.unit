@@ -1,0 +1,21 @@
+Name	Battleship
+Base_Cost	28000
+Max_HP	10
+Move_Type	Ship
+Max_Fuel	99
+Move_Range	5
+Armor_Type	Battleship
+Primary_Name	Cannon
+Primary_Range	(2,6)
+Primary_Table	Infantry=95, Mech=90, Recon=90, Tank=80, Medium_Tank=55, Neotank=50, Megatank=25, APC=80, Artillery=80, Rockets=85, Anti-Air=85, Missiles=90, Piperunner=80, Battleship=50, Cruiser=95, Lander=95, Sub=95, Black_Boat=95, Carrier=60
+Ammo	9
+Secondary_Name	N/A
+Vision_Range	2
+Image_Type	battleship
+Carry_Types	N/A
+Can_Stealth	False
+Can_Capture	False
+Can_Resupply	False
+Can_Launch	False
+Can_Explode	False
+Can_Repair	False

@@ -18,8 +18,13 @@ class Menu:
 class MenuOptions:
     
     #Will cause unit to attack another???
-    def attack(self,board):
-        pass
+    def attack(self,board,cord1,cord2):
+        aggressor = board.find_square(cord1).unit
+        defender = board.find_square(cord2).unit
+        
+        if(aggressor.attack(defender) and self.inAttackRange(board,cord1,cord2)):
+            defender.attack(aggressor)
+        
     
     #Unit capture functionality
     def capture(self,board):
@@ -35,65 +40,99 @@ class MenuOptions:
 #FIX: no handling for missing unit
         self.recursiveHighlight(board.cursor,board,unit)
         
-        cordarray = []
+        move_array = []
         
         for col in range(len(board.squares)):
-            for sq in range(len(col)):
+            for sq in range(len(board.squares[col])):
                 if board.squares[col][sq].move_num>0:
-                    cordarray.append([col,sq])
-                    board.squares[col][sq].move_num=0
+                    move_array.append([col,sq])
         
-        return cordarray
+        return move_array
+    
     #Get the range in which a unit can attack from current position
-    def getAttackHighlights(self,board):
-        pass
+    def getRangeHighlights(self,board):
+        unit = board.cursor_square().unit
+#FIX: no handling for missing unit
+        return board.cursor_square().find_range(unit.primary_range[0],unit.primary_range[1])
+    
+    def inAttackRange(self,board, agg_cords, def_cords):
+        unit = board.cursor_square().unit
+        x_dist = abs(agg_cords[0] - def_cords[0])
+        y_dist = abs(agg_cords[1] - def_cords[1])
+        return (((x_dist+y_dist) >= unit.primary_range[0]) and ((x_dist+y_dist) <= unit.primary_range[1]))
+    
+    def getAttackableCords(self,board):
+        range_array = self.getRangeHighlights(board)
+        
+        target_array = []
+        
+        for cords in range_array:
+            if board.find_square(cords).unit != None:
+                target_array.append(cords)
+        
+        return target_array
     
     #Get the range in which a unit can move and the range in which it can attack from movable spaces
-    def getBothHighlights(self,board):
-        pass
+    def getMoveAttackHighlights(self,board):
+#FIX: no handling for missing unit
+        self.recursiveHighlight(board.cursor,board,board.cursor_square().unit)
+        
+        move_array = []
+        attack_array = []
+        
+        for col in range(len(board.squares)):
+            for sq in range(len(board.squares[col])):
+                if board.squares[col][sq].move_num != None:
+                    if board.squares[col][sq].move_num>0:
+                        move_array.append([col,sq])
+                    else:
+                        attack_array.append([col,sq])
+        return move_array,attack_array
     
     def recursiveHighlight(self,cords,board,unit):
+        #Reset board move_num state
+        for col in board.squares:
+            for sq in col:
+                sq.move_num = None
         
         #Current moves left at center square
         center = board.find_square(cords).move_num
         
-        #Conditional check of grid bounds
-        if cords[0] > 0:
-            #Moves left at adjacent square, after moving from center
-            cost = unit.terrain_costs[board.find_square(cords[0]-1,cords[1]).terrain]
-            left = center - cost if cost != "n/a" else 0
+        #Increase the move highlight at an adjacent square, if possible, and return true if successful
+        def specificHighlight(specific_cords):
+            #Moves remaining at adjacent square, after moving from center
+            cost = unit.terrain_costs[board.find_square(specific_cords).terrain]
+            moves_left_at = center - cost if cost != "n/a" else 0
+            
+            specific_square = board.find_square(specific_cords)
+            
+            #If the value is None, set the value to moves_left_at
+            if (specific_square.move_num == None):
+                specific_square.move_num = moves_left_at
+                #No need to continue recursion if moves_left_at < 0
+                return (moves_left_at > 0)
+            #If the value exits, (set it to moves_left_at and continue recursion) if moves_left_at is greater
+            else:
+                if specific_square.move_num < moves_left_at:
+                    specific_square.move_num = moves_left_at 
+                    return True
+                else:
+                    return False
+            
+        #If left adjacent square is in bounds, then if left square can be moved to more efficiently,
+        if (cords[0] > 0) and (specificHighlight(cords[0]-1,cords[1])):
+            #Highlight left
+            self.recursiveHighlight((cords[0]-1,cords[1]),board,unit)
         
-            #If the adjacent square's moves left are greater than above, do nothing
-            #Otherwise, overwrite it
-            if(board.find_square(cords[0]-1,cords[1]).move_num<left):
-                board.find_square(cords[0]-1,cords[1]).move_num = left
-                self.recursiveHighlight((cords[0]-1,cords[1]),board,unit)
+        if (cords[1] > 0) and (specificHighlight(cords[0],cords[1]-1)):
+            self.recursiveHighlight((cords[0],cords[1]-1),board,unit)
         
-        if cords[1] > 0:
-            cost = unit.terrain_costs[board.find_square(cords[0],cords[1]-1).terrain]
-            up = center - cost if cost != "n/a" else 0
+        if ((cords[0] + 1) < len(board.squares)) and (specificHighlight(cords[0]+1,cords[1])):
+            self.recursiveHighlight((cords[0]+1,cords[1]),board,unit)
         
-            if(board.find_square(cords[0],cords[1]-1).move_num<up):
-                board.find_square(cords[0],cords[1]-1).move_num = up
-                self.recursiveHighlight((cords[0],cords[1]-1),board,unit)
-        
-        if (cords[0] + 1) < len(board.squares):
-            cost = unit.terrain_costs[board.find_square(cords[0]+1,cords[1]).terrain]
-            right = center - cost if cost != "n/a" else 0
-        
-            if(board.find_square(cords[0]+1,cords[1]).move_num<right):
-                board.find_square(cords[0]+1,cords[1]).move_num = right
-                self.recursiveHighlight((cords[0]+1,cords[1]),board,unit)
-        
-        if (cords[1] + 1) < len(board.squares[cords[0]]):
-            cost = unit.terrain_costs[board.find_square(cords[0],cords[1]+1).terrain]
-            down = center - cost if cost != "n/a" else 0
-        
-            if(board.find_square(cords[0],cords[1]+1).move_num<down):
-                board.find_square(cords[0],cords[1]+1).move_num = down
-                self.recursiveHighlight((cords[0],cords[1]+1),board,unit)
-        
-        
+        if ((cords[1] + 1) < len(board.squares[cords[0]])) and (specificHighlight(cords[0],cords[1]+1)):
+            self.recursiveHighlight((cords[0],cords[1]+1),board,unit)
+    
     #Get list of building options
     def getBuildOptions(self,board):
         build_opt_list = []

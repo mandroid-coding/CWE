@@ -1,0 +1,21 @@
+Name	Bomber
+Base_Cost	22000
+Max_HP	10
+Move_Type	Air
+Max_Fuel	99
+Move_Range	7
+Armor_Type	Bomber
+Primary_Name	Bombs
+Primary_Range	(1,1)
+Primary_Table	Infantry=110, Mech=110, Recon=105, Tank=105, Medium_Tank=95, Neotank=90, Megatank=35, APC=105, Artillery=105, Rockets=105, Anti-Air=95, Missiles=105, Piperunner=105, Battleship=75, Cruiser=50, Lander=95, Sub=95, Black_Boat=95, Carrier=75
+Ammo	3
+Secondary_Name	N/A
+Carry_Types	N/A
+Vision_Range	2
+Image_Type	bomber
+Can_Stealth	False
+Can_Capture	False
+Can_Resupply	False
+Can_Launch	False
+Can_Explode	False
+Can_Repair	False

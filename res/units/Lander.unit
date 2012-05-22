@@ -1,0 +1,20 @@
+Name	Lander
+Base_Cost	12000
+Max_HP	10
+Move_Type	Transport
+Max_Fuel	99
+Move_Range	6
+Armor_Type	Lander
+Primary_Name	N/A
+Secondary_Name	N/A
+#Carry_Types corresponds to the Name of the unit, not its Armor_Type.
+Carry_Types	Infantry, Mech, Recon, Tank, Medium Tank, Neotank, Megatank, Artillery, Rockets, Anti-Air, Missiles
+Carry_Count	2
+Vision_Range	1
+Image_Type	lander
+Can_Stealth	False
+Can_Capture	False
+Can_Resupply	False
+Can_Launch	False
+Can_Explode	False
+Can_Repair	False

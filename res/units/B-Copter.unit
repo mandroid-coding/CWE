@@ -1,0 +1,23 @@
+Name	B-Copter
+Base_Cost	9000
+Max_HP	10
+Move_Type	Copter
+Max_Fuel	99
+Move_Range	6
+Armor_Type	B-Copter
+Primary_Name	Missiles
+Primary_Range	(1,1)
+Primary_Table	Recon=55, Tank=55, Medium_Tank=25, Neotank=20, Megatank=10, APC=60, Artillery=65, Anti-Air=25, Missiles=65, Piperunner=55, Battleship=25, Cruiser=25, Lander=25, Sub=25, Black_Boat=25, Carrier=25
+Ammo	6
+Secondary_Name	Machine gun
+Secondary_Range	(1,1)
+Secondary_Table	Infantry=75, Mech=75, Recon=30, Tank=6, Medium_Tank=1, Neotank=1, Megatank=1, APC=20, Artillery=25, Rockets=35, Anti-Air=6, Missiles=35, Piperunner=6, B-Copter=65, T-Copter=95
+Carry_Types	N/A
+Vision_Range	3
+Image_Type	b-copter
+Can_Stealth	False
+Can_Capture	False
+Can_Resupply	False
+Can_Launch	False
+Can_Explode	False
+Can_Repair	False
