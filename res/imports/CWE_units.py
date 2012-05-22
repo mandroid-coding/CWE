@@ -3,6 +3,7 @@
 #For example, Stealthed_Sub
 import os.path
 from CWE_units import __file__
+import CWE_map
 module_folder = os.path.dirname( __file__ )
 resource_folder = os.path.abspath( os.path.join( module_folder, os.path.pardir) )
 unit_folder = os.path.join( resource_folder, "units" )
@@ -26,7 +27,7 @@ class Unit:
         if "controller" in kwargs.keys():
             self.controller = kwargs["controller"]
         else:
-            self.controller = "Nobody"
+            self.controller = None
         #Allow the method caller to override the default cost
         if "cost" in kwargs.keys():
             self.cost = kwargs["cost"]

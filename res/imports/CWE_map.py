@@ -18,7 +18,7 @@ class Player(object):
 	def __init__(self, name):
 		self.name = name
 		self.funds = 0
-	
+		self.color = None
 	def salary(self):
 		return self.funds
 	
@@ -29,10 +29,15 @@ class Player(object):
 			return true
 
 class Map(object):
-	def __init__(self):
+	def __init__(self, player_list = ["Player 1", "Player 2"]):
 		self.squares = []
 		self.cursor = [0, 0]
-		self.player_list = [Player("player 1"), Player("player 2")] 
+		self.player_list = []
+		for player_name in player_list:
+		    self.player_list.append( Player(player_name) )
+		self.color_list = ["Orange", "Blue", "Red", "Black"]
+		for player_index in range(len(self.player_list)):
+		    self.player_list[player_index].color = self.color_list[player_index]
 		self.turn_count = 0
 		self.units = set()
 		self.buildings = set()

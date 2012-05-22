@@ -124,7 +124,18 @@ class Cwe():
 			# iterates through each square from the top
 			for j in range(len(self.maps.squares[i])):
 				self.draw_square(i, j, self.maps.squares[i][j].terrain.color)
-				
+				#(TV: Also need to attach unit image here)
+				current_square = self.maps.squares[i][j]
+				if current_square.unit:
+					shown_unit = current_square.unit
+					# hande neutral units here
+					if shown_unit.controller == None:
+						unit_color = "Gray"
+					else:
+						unit_color = shown_unit.controller.color
+					image_filename = "{color}_{unit_type}.gif".format(\
+					color = unit_color,\
+					unit_type = unit.image_type )
 		# Loads selector image
 		self.images['game_selector'] = Tkinter.PhotoImage(file="res/images/game_selector.gif")
 		self.game_selector = self.canvas.create_image(0, 0, anchor="nw", image=self.images['game_selector'])
