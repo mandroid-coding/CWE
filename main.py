@@ -1,10 +1,6 @@
-import sys
+import sys, Tkinter, pickle, os, tkFileDialog
 sys.path.append('./res/imports')
-
-import Tkinter
-import CWE_map
-
-
+import CWE_map, CWE_terrain, CWE_flow
 
 class Cwe():	
 	def __init__(self):
@@ -27,8 +23,9 @@ class Cwe():
 
 		# main loop called
 		self.main.mainloop()
-	
-	# main menu display and functions
+	###################################
+	# main menu display and functions #
+	###################################
 	def display_main(self):
 		# sets location
 		self.location = 'Main'
@@ -63,11 +60,17 @@ class Cwe():
 	def main_move_up(self, event):
 		if self.selected != 0:
 			self.canvas.move(self.selector, 0, -125)
-			self.selected -= 1	
+			self.selected -= 1
+		else:
+			self.canvas.move(self.selector, 0, 250)
+			self.selected = 2
 	def main_move_down(self, event):
 		if self.selected != 2:
 			self.canvas.move(self.selector, 0, 125)
 			self.selected += 1
+		else:
+			self.canvas.move(self.selector, 0, -250)
+			self.selected = 0
 	def main_select(self, event):
 		# new game
 		if self.selected == 0:
@@ -77,11 +80,34 @@ class Cwe():
 
 			# displays the config menu for new game, just a placeholder right now
 			self.display_new_config()
-			self.new_game()
+			
+			self.new_game(CWE_map.Map(["Player1", "Player2"]))
 
 		# load game
 		elif self.selected == 1:
-			print 'load feature coming soon'
+			# clears the images off the screen
+			self.clear_all_displayed()
+			
+			# calls the function to display the save files
+			game = tkFileDialog.askopenfilename(filetypes=[('SAV','.sav')], initialdir='./res/save_games', title="Select game to load")
+			
+			# change var's type
+			game.encode('utf-8')
+			
+			# user canceled
+			if game=='':
+				self.display_main()
+			
+			# user selected files
+			else:
+				# redeclares game as the opened file
+				game = open(game, 'r')
+				
+				# unpickles the instance from the file on disk
+				maps = pickle.load(game)
+							
+				# starts the game
+				self.new_game(maps)
 
 		# exit
 		elif self.selected == 2:
@@ -92,8 +118,10 @@ class Cwe():
 		# just a placeholder right now since getting the other stuff done is more important for everyone else.
 		pass
 
-	# in-game functions
-	def new_game(self):		
+	#####################
+	# in-game functions #
+	#####################
+	def new_game(self, game_map):		
 		self.location = "Ingame"
 		
 		self.selected = [0,0]
@@ -105,7 +133,10 @@ class Cwe():
 #		col3 = [[2,0,'green'],[2,1,'red'],[2,2,'green'],[2,3,'red']]
 #		col4 = [[3,0,'green'],[3,1,'red'],[3,2,'green'],[3,3,'red']]
 #		self.maps = [col1,col2,col3,col4]		
-		self.maps = CWE_map.Map(["Player1", "Player2"])
+
+
+		self.maps = game_map
+#		self.maps = CWE_map.Map(["Player1", "Player2"])
 		
 		
 		# bindings
@@ -163,7 +194,7 @@ class Cwe():
 			self.canvas.move(self.game_selector, 0, -self.side_len)
 		# catches the error thrown when no square exists
 		except IndexError:
-			print 'locking onto the grid is working'
+			pass
 	def game_move_left(self, event):
 		try:
 			# calculates new indices
@@ -183,7 +214,7 @@ class Cwe():
 			self.canvas.move(self.game_selector, -self.side_len, 0)
 		# catches the error thrown when no square exists
 		except IndexError:
-			print 'locking onto the grid is working'
+			pass
 	def game_move_right(self, event):
 		try:
 			# calculates new indices
@@ -197,7 +228,7 @@ class Cwe():
 			self.canvas.move(self.game_selector, self.side_len, 0)
 		# catches the error thrown when no square exists
 		except IndexError:
-			print 'locking onto the grid is working'
+			pass
 	def game_move_down(self, event):
 		try:
 			# calculates new indices
@@ -211,12 +242,16 @@ class Cwe():
 			self.canvas.move(self.game_selector, 0, self.side_len)
 		# catches the error thrown when no square exists
 		except IndexError:
-			print 'locking onto the grid is working'
+			pass
 	def game_select(self, event):
 		# FIXME: add check for if there's no unit and no building
-		print 'selected'
 		self.display_game_menu()
+		menu=CWE_flow.Menu(self.maps)
+		
 
+	########################
+	# ingame menu functions#
+	########################
 	def display_game_menu(self):
 		self.menu_selector = 0
 		
@@ -227,51 +262,63 @@ class Cwe():
 		self.main.bind("<Return>", self.game_menu_select)
 		self.bindings = ["<Up>","<Down>","<Return>"]
 
-		self.images['ingame_menu'] = self.canvas.create_rectangle(600, 500, 800, 600, outline='white', fill="red")
-		self.images['ingame_quit'] = self.canvas.create_text(700,585, text="Main Menu", fill='green')
-		self.images['ingame_save'] = self.canvas.create_text(700,565, text="Save", fill='green')
+		self.images['ingame_menu'] = self.canvas.create_rectangle(600, 485, 800, 600, outline='white', fill="red")
+		self.images['ingame_back_to_game'] = self.canvas.create_text(700,505, text="Back To Game", fill='green')
 		self.images['ingame_end_turn'] = self.canvas.create_text(700,525, text="End Turn", fill='green')
 		self.images['ingame_stats'] = self.canvas.create_text(700,545, text="Stats", fill='green')
-		self.images['ingame_selector'] = self.canvas.create_rectangle(650,515,755,535, outline='green')
+		self.images['ingame_save'] = self.canvas.create_text(700,565, text="Save", fill='green')
+		self.images['ingame_quit'] = self.canvas.create_text(700,585, text="Main Menu", fill='green')
+		self.images['ingame_selector'] = self.canvas.create_rectangle(650,495,755,515, outline='green')
 
+		self.game_menu_imgs = [self.images['ingame_selector'],self.images['ingame_quit'],self.images['ingame_back_to_game'],self.images['ingame_menu'],self.images['ingame_end_turn'],self.images['ingame_stats'],self.images['ingame_save']]
 	def game_menu_up(self, event):
 		if self.menu_selector!=0:
 			self.menu_selector -= 1
 			self.canvas.move(self.images['ingame_selector'], 0, -20)
-			print 'menu up fired'
 		else: 
-			pass
-
+			self.menu_selector = 4
+			self.canvas.move(self.images['ingame_selector'], 0, 80)
 	def game_menu_down(self, event):
-		if self.menu_selector!=3:
+		if self.menu_selector!=4:
 			self.menu_selector += 1
 			self.canvas.move(self.images['ingame_selector'], 0, 20)
-			print 'menu down fired'
 		else: 
-			pass
-	
+			self.menu_selector = 0
+			self.canvas.move(self.images['ingame_selector'], 0, -80)
 	def game_menu_select(self, event):
-		print 'selected'
-		print self.menu_selector
+		# back to game
+		if self.menu_selector==0:
+			for i in self.game_menu_imgs:
+				self.canvas.delete(i)
+			# bindings
+			self.main.bind("<Up>", self.game_move_up)
+			self.main.bind("<Left>", self.game_move_left)
+			self.main.bind("<Right>", self.game_move_right)
+			self.main.bind("<Down>", self.game_move_down)
+			self.main.bind("<Return>", self.game_select)
+			
+			self.bindings = ["<Up>", "<Left>", "<Right>", "<Down>", "<Return>"]
+			
+		# end turn
+		if self.menu_selector==1:
+			print "end turn"
+
+		# stats menu
+		if self.menu_selector==2:
+			print "stats menu"
+			
+		# save game
+		if self.menu_selector==3:
+			self.display_save()
+			
 		# end game
-		if self.menu_selector == 3:
+		if self.menu_selector == 4:
 			self.display_confirmation()
 
 
-
-	# functions able to be called from any game state
-	def clear_all_displayed(self):
-		# deletes canvas images and resets iterator
-		for i in self.displayed:
-			self.canvas.delete(i)
-		self.displayed = []
-		
-		# resets images loaded
-		self.images = {}
-	def clear_bindings(self):
-		for i in self.bindings:
-			self.main.unbind(i)
-		self.bindings=[]
+	##############################
+	# exit confirmation functions#
+	##############################
 	def display_confirmation(self):
 		# displays confirmation message
 		
@@ -295,7 +342,6 @@ class Cwe():
 		
 		self.confirmation_images = [self.canvas.create_image(203, 202, anchor="nw", image=self.images['confirm_text'])]
 		self.confirmation_images += [self.images['exit_selector'], self.images['confirm_box'], self.canvas.create_image(325, 325, anchor="nw", image=self.images['yesno'])]
-	# exit confirmation functions
 	def confirmation_right(self, event):
 		# it can only move right if it selects the 0th element because there are only 2 elements
 		if self.confirmation_selection == 0:
@@ -322,20 +368,88 @@ class Cwe():
 				self.display_main()
 			elif self.confirmation_selection==1:
 				self.clear_confirmation()
-				# bindings
-				self.main.bind("<Up>", self.game_move_up)
-				self.main.bind("<Left>", self.game_move_left)
-				self.main.bind("<Right>", self.game_move_right)
-				self.main.bind("<Down>", self.game_move_down)
-				self.main.bind("<Return>", self.game_select)
-		
-		
-		self.bindings = ["<Up>", "<Left>", "<Right>", "<Down>", "<Return>"]
-
+				
+				# rebind ingame menu bindings
+				self.clear_bindings()			
+				self.main.bind("<Up>", self.game_menu_up)
+				self.main.bind("<Down>", self.game_menu_down)
+				self.main.bind("<Return>", self.game_menu_select)
+				self.bindings = ["<Up>","<Down>","<Return>"]
 	def clear_confirmation(self):
 		for i in self.confirmation_images:
 			self.canvas.delete(i)
+	
+	###############################
+	# save confirmation functions #
+	###############################	
+	# saves the game
+	def game_save(self):
+		# build directory
+		directory = './res/save_games/'+self.images['save_entry'].get()+'.sav'
+		
+		# open file and save
+		fileobj = open(directory, 'w')
+		pickle.dump(self.maps, fileobj)
+		fileobj.close()
+		
+		# closes the save confirmation window
+		self.save_cancel()
+	# displays the save confirmation
+	def display_save(self):
+		# clears old bindings
+		self.clear_bindings()
+			
+		# keeps track of where the selector is
+		self.confirmation_selection = 1
+
+		# display images
+		self.images['confirm_box'] = self.canvas.create_rectangle(250, 200, 550, 400, outline='white', fill="red")
+		self.images['iputatexonimaeg'] = self.canvas.create_text(400, 225, text="Enter a name", fill='green', font=("Arial", 30))
+		
+		# build widgets
+		self.images['save_entry'] = Tkinter.Entry(self.canvas)
+		self.images['save_entry'].place(x=320,y=275)
+		self.images['confirm'] = Tkinter.Button(self.canvas, text='Save', background='darkgreen', foreground='red', command=self.game_save)
+		self.images['confirm'].place(x=320, y=340)
+		self.images['cancel'] = Tkinter.Button(self.canvas, text='Cancel', background='darkgreen', foreground='red', command=self.save_cancel)
+		self.images['cancel'].place(x=425, y=340)
+		
+		self.save_images = [self.images['confirm_box'],self.images['iputatexonimaeg'],self.images['save_entry']]
+	# removes the save confirmation
+	def save_cancel(self):
+		# destroy the widgets
+		self.images['confirm'].destroy()
+		self.images['cancel'].destroy()
+		self.images['save_entry'].destroy()
+		
+		# delete the canvas images
+		for i in self.save_images:
+			self.canvas.delete(i)
+
+		# update bindings
+		self.clear_bindings()			
+		self.main.bind("<Up>", self.game_menu_up)
+		self.main.bind("<Down>", self.game_menu_down)
+		self.main.bind("<Return>", self.game_menu_select)
+		self.bindings = ["<Up>","<Down>","<Return>"]
 
 
+	###################################################
+	# functions able to be called from any game state #
+	###################################################
+	def clear_all_displayed(self):
+		# deletes canvas images and resets iterator
+		for i in self.displayed:
+			self.canvas.delete(i)
+		self.displayed = []
+		
+		# resets images loaded
+		self.images = {}
+	def clear_bindings(self):
+		for i in self.bindings:
+			self.main.unbind(i)
+		self.bindings=[]
+	
+		
 if __name__=="__main__":
 	app = Cwe()

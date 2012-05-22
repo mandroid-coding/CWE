@@ -1,7 +1,10 @@
 class Menu:
     
     def __init__(self,board):
-        self.parts,self.titles = MenuOptions.getOptions(board)
+		# fetches lists
+        # changing this for now since it doesn't seem to point to the right method...
+        #self.parts,self.titles = MenuOptions.getOptions(board)
+        self.parts,self.titles = MenuOptions().getMenuOptions()
         #Need exception handling for empty lists
         self.selected = 0
         print("Menu initialized")
@@ -255,3 +258,9 @@ class BuildOption:
             return (self.which.name + ": " + self.which.cost)
         else:
             return "Empty build option"
+
+# testing block...
+if __name__=='__main__':
+	import CWE_map
+	n = CWE_map.Map('derp')
+	m = Menu(n)
