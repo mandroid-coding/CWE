@@ -53,7 +53,8 @@ class Map(object):
 				unit.has_moved = False
 				
 	def cursor_square(self):
-		return self.find_square(self.cursor)
+		#return self.find_square(self.cursor)
+		return self.find_square()
 		
 	def test_map_one(self):
 		test_map = self.create_grid(10)
