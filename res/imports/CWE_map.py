@@ -36,9 +36,14 @@ class Map(object):
 		self.buildings = set()
 		self.squares = self.create_grid(10)
 		self.test_map_one()
+		
+	##def eradicate_units(self, player):
+		##for unit in self.units:
+			##unit.square.remove_unit()
 	
-	#returns true if someone has won and the game is over and returns false if nobody has won yet.
-	def win_check():
+	###returns true if someone has won and the game is over and returns false if nobody has won yet.
+	##def win_check():
+		
 		
 	
 	def get_square(self, coordinate_list):

@@ -99,12 +99,20 @@ class Building(Terrain):
 		if self.HP < 0 or self.HP == 0:
 			self.controller = unit.controller
 			self.HP = 20
-	
 
 class Capitol(Building):
 	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 4, controller)
 		self.label = "Capitol"
+	def capture(self, unit):
+		if self.controller == unit.controller:
+			return False
+		self.HP -= unit.hp
+		if self.HP < 0 or self.HP == 0:
+			#self.square.Map.eradicate_units(self.controller)
+			#self.square.Map.
+			self.controller = unit.controller
+			self.HP = 20
 	
 class City(Building):
 	def __init__(self, square, controller = False):
