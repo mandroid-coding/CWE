@@ -271,7 +271,7 @@ class Cwe():
 			pass
 	def game_select(self, event):
 		# square has unit which hasn't yet moved
-		if self.maps.get_square(self.selected).unit != False and !self.maps.get_square(self.selected).unit.has_moved:
+		if self.maps.get_square(self.selected).unit != False and not self.maps.get_square(self.selected).unit.has_moved:
 			print "unit selected to move"
 		
 		# if there's no unit and no building which builds stuff
@@ -285,7 +285,7 @@ class Cwe():
 						#menu=CWE_flow.MenuOptions().getMenuOptions(self.maps)
 						
 		# if there's a base without a unit on it
-		if self.maps.get_square(self.selected).unit == False
+		if self.maps.get_square(self.selected).unit == False:
 			if self.maps.get_square(self.selected).terrain.label == "Base":
 				print self.maps.get_square(self.selected).terrain.unit_list
 			if self.maps.get_square(self.selected).terrain.label == "Port":

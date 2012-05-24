@@ -77,10 +77,7 @@ class Map(object):
 		self.get_square([0,9]).add_terrain(CWE_terrain.Capitol(self.get_square([0,9]), self.player_list[0]))
 		self.get_square([9,0]).add_terrain(CWE_terrain.Capitol(self.get_square([9,0]), self.player_list[1]))
 		self.get_square([1,8]).create_unit("Infantry")
-<<<<<<< HEAD
-=======
 		self.get_square([5,8]).create_unit("Infantry")
->>>>>>> 46ebbbb76c46afba259ee7b72bf631fc0b4afc08
 		self.get_square([2,7]).add_terrain(CWE_terrain.Base(self.get_square([2,7])))
 		self.get_square([4,5]).add_terrain(CWE_terrain.Base(self.get_square([4,5]), self.player_list[0]))
 		self.get_square([7,2]).add_terrain(CWE_terrain.Base(self.get_square([7,2]), self.player_list[1]))
@@ -176,21 +173,14 @@ class Square(object):
 	def create_unit(self, unit_type):
 		print 'create unit'
 		print self.Map.current_player
-		self.add_unit(CWE_units.Unit(unit_type, square = self, player = self.Map.current_player))
+		self.add_unit(CWE_units.Unit(unit_type, square = self, controller = self.Map.current_player))
 	
 	def add_unit(self, unit_instance):
-<<<<<<< HEAD
 		print 'add unit'
 		if self.unit == False:
 			self.unit = unit_instance
 			return True
 		else:
-=======
-		if self.unit != None:
-			self.unit = unit_instance
-			return True
-		elif self.unit == None:
->>>>>>> 46ebbbb76c46afba259ee7b72bf631fc0b4afc08
 			return False
 		
 	def remove_unit(self):

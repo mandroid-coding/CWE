@@ -196,7 +196,7 @@ class MenuOptions:
                         max_hp = current_unit.max_hp
                         regen_amount = round(float(max_hp)/10)
                         regen_cost = int(round(0.1 * current_unit.cost))
-                        if board.current_player().funds >= regen_cost
+                        if board.current_player().funds >= regen_cost:
                             if hp + regen_amount >= max_hp:
                                 current_unit.hp = current_unit.max_hp
                             else:
