@@ -27,7 +27,7 @@ class Unit:
         if "controller" in kwargs.keys():
             self.controller = kwargs["controller"]
         else:
-            self.controller = None
+            raise TypeError("Controller is mandatory")
         #Allow the method caller to override the default cost
         if "cost" in kwargs.keys():
             self.cost = kwargs["cost"]
