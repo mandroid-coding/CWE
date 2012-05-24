@@ -92,16 +92,22 @@ class Building(Terrain):
 		self.controller = controller
 		self.color = "grey20"
 		self.unit_list = set()
+		self.being_captured = False
 	def capture(self, unit):
 		if self.controller == unit.controller:
 			return False
 		self.HP -= unit.hp
+		self.being_captured = True
 		if self.HP < 0 or self.HP == 0:
 			self.controller = unit.controller
 			self.HP = 20
+<<<<<<< HEAD
+=======
+	        self.being_captured = False
+>>>>>>> c98904831037d8459d989d52c14ce26e7ec0afe2
 
 class Capitol(Building):
-	def __init__(self, square, controller = False):
+	def __init__(self, square, controller = None):
 		Building.__init__(self, square, 4, controller)
 		self.label = "Capitol"
 	def capture(self, unit):
@@ -115,12 +121,12 @@ class Capitol(Building):
 			self.HP = 20
 	
 class City(Building):
-	def __init__(self, square, controller = False):
+	def __init__(self, square, controller = None):
 		Building.__init__(self, square, 3, controller)
 		self.label = "City"
 	
 class Base(Building):
-	def __init__(self, square, controller = False):
+	def __init__(self, square, controller = None):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Base"
 		self.unit_list = [["Anti-Air", "8000"], ["APC", "5000"],  ["Artillery", "6000"], 
@@ -129,12 +135,12 @@ class Base(Building):
 		["Rockets", "12000"], ["Tank", "7000"]]
 		
 class Airport(Building):
-	def __init__(self, square, controller = False):
+	def __init__(self, square, controller = None):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Airport"
 		self.unit_list = [["B-Copter", "9000"], ["Bomber", "28000"], ["Fighter", "22000"], ["Stealth", "24000"], ["T-Copter", "5000"]]
 class Port(Building):
-	def __init__(self, square, controller = False):
+	def __init__(self, square, controller = None):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Port"
 		self.unit_list = [["Battleship", "28000"], ["Black_Boat", "7500"], ["Carrier", "30000"], ["Cruiser", "18000"], ["Lander", "12000"], ["Sub", "20000"]]
