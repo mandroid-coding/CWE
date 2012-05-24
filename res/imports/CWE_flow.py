@@ -135,7 +135,9 @@ class MenuOptions:
     
     #Get list of building options
     def getBuildOptions(self,board):
+		# 
         build_opt_list = []
+        # list of strings to pass to the menu constructor
         build_txt_list = []
         for u in board.unit_types:
             if ((u.cost <= board.players[board.current_player].money)):
@@ -221,11 +223,15 @@ class MenuOptions:
         titles_list = []
         
         sqr = board.cursor_square()
+        
+        # square has a unit and unit is owned by active player
+        # FIXME: add check for the unit having moved already.
         if((sqr.unit!=None) and (sqr.unit.player == board.current_player())):
             opts_list = self.getUnitOptions(sqr.unit)
             pass
-#FIX: assumptions about terrain naming
-        elif((sqr.unit==None) and (any([str(sqr.terrain)=="Base",str(sqr.terrain)=="Airport",str(sqr.terrain)=="Port"]))):
+		# square has no unit but does have a building that the current player owns
+        elif((sqr.unit==None) and (any([str(sqr.terrain.label)=="Base",str(sqr.terrain.label)=="Airport",str(sqr.terrain.label)=="Port"]))) and sqr.controller==board.current_player:
+            # return the build menu options
             return self.getBuildOptions(board)
         
         else:

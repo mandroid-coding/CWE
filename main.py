@@ -246,7 +246,7 @@ class Cwe():
 	def game_select(self, event):
 		# FIXME: add check for if there's no unit and no building
 		self.display_game_menu()
-		menu=CWE_flow.Menu(self.maps)
+		menu=CWE_flow.MenuOptions().getMenuOptions(self.maps)
 		
 
 	########################
