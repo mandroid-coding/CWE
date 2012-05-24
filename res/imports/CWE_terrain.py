@@ -115,21 +115,18 @@ class Base(Building):
 	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Base"
-		self.unit_list = set(
-		("Anti-Air, APC, Artillery, Infantry, Mech, Medium_Tank, Megatank, " +
-		"Missiles, Neotank, Piperunner, Recon, Rockets, Tank").split(", ")
-		)
+		self.unit_list = [["Anti-Air", "8000"], ["APC", "5000"],  ["Artillery", "6000"], 
+		["Infantry", "1000"], ["Mech", "3000"], ["Medium_Tank", "16000"], ["Megatank" ,"28000"], 
+		["Missiles","12000"], ["Neotank", "22000"], ["Piperunner", "20000"], ["Recon","4000"], 
+		["Rockets", "12000"], ["Tank", "7000"]]
+		
 class Airport(Building):
 	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Airport"
-		self.unit_list = set(
-		"B-Copter, Bomber, Fighter, Stealth, T-Copter".split(", ")
-		)
+		self.unit_list = [["B-Copter", "9000"], ["Bomber", "28000"], ["Fighter", "22000"], ["Stealth", "24000"], ["T-Copter", "5000"]]
 class Port(Building):
 	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Port"
-		self.unit_list = set(
-		"Battleship, Black_Boat, Carrier, Cruiser, Lander, Sub".split(", ")
-		)
+		self.unit_list = [["Battleship", "28000"], ["Black_Boat", "7500"], ["Carrier", "30000"], ["Cruiser", "18000"], ["Lander", "12000"], ["Sub", "20000"]
