@@ -213,6 +213,7 @@ class Unit:
         #Units do not, however, start with full movement
         #(it is replenished at the beginning of a turn)
         self.moves_left = 0
+        self.has_moved = False
         #Armor type determines how much damage a unit takes.
         #Non-unit buildings have the "Medium_Tank" armor type.
         self.armor_type = fields["Armor_Type"]
