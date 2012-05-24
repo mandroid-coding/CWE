@@ -51,6 +51,7 @@ class Map(object):
 		for unit in self.units:
 			if unit.player == self.current_player:
 				unit.has_moved = False
+				unit.moves_left = unit.move_range
 				
 	def cursor_square(self):
 		#return self.find_square(self.cursor)
@@ -72,7 +73,6 @@ class Map(object):
 		self.get_square([0,9]).add_terrain(CWE_terrain.Capitol(self.get_square([0,9]), self.player_list[0]))
 		self.get_square([9,0]).add_terrain(CWE_terrain.Capitol(self.get_square([9,0]), self.player_list[1]))
 		self.get_square([1,8]).create_unit("Infantry")
-		self.get_square([5,8]).create_unit("Infantry")
 		self.get_square([2,7]).add_terrain(CWE_terrain.Base(self.get_square([2,7])))
 		self.get_square([4,5]).add_terrain(CWE_terrain.Base(self.get_square([4,5]), self.player_list[0]))
 		self.get_square([7,2]).add_terrain(CWE_terrain.Base(self.get_square([7,2]), self.player_list[1]))
@@ -166,7 +166,7 @@ class Square(object):
 	#self.get_square([1,8]).add_unit(CWE_units.Unit("(Infantry", square = self.get_square([1,8]), player = self.player_list[0]))
 	
 	def create_unit(self, unit_type):
-		self.add_unit(CWE_units.Unit(unit_type, square = self, player = self.Map.current_player))
+		self.add_unit(CWE_units.Unit(unit_type, square = self, controller = self.Map.current_player))
 	
 	def add_unit(self, unit_instance):
 		if self.unit != False:
@@ -232,6 +232,8 @@ def code_check():
 	print "test of find_rage(1,3):", x.squares[3][3].find_unrestricted_range(1)
 	print "test of square.distance_to (should be 5) :", x.squares[3][3].distance_to(x.squares[6][5])
 	print "test of print_map: \n", print_map(x)
+	if x.get_square([1,8]).unit == False:
+		print "!!!!!!!!!!!!!!!!!!!!!!"
 
 def print_map(a_map):
 	print "Printing map to console.\n\nBeep beep, boop boop..."
@@ -257,6 +259,7 @@ def print_map(a_map):
 
 if __name__ == "__main__":
 	code_check()
+	
 
 
 		

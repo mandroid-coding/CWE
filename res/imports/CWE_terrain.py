@@ -129,4 +129,4 @@ class Port(Building):
 	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Port"
-		self.unit_list = [["Battleship", "28000"], ["Black_Boat", "7500"], ["Carrier", "30000"], ["Cruiser", "18000"], ["Lander", "12000"], ["Sub", "20000"]
+		self.unit_list = [["Battleship", "28000"], ["Black_Boat", "7500"], ["Carrier", "30000"], ["Cruiser", "18000"], ["Lander", "12000"], ["Sub", "20000"]]
