@@ -24,9 +24,9 @@ class Player(object):
 	
 	def change_money(self, amount):
 		if self.funds + amount < 0:
-			return false
+			return False
 		elif self.funds + amount >= 0:
-			return true
+			return True
 
 class Map(object):
 	def __init__(self, player_list = ["Player 1", "Player 2"]):
@@ -71,7 +71,6 @@ class Map(object):
 					square.terrain = CWE_terrain.Road(square)
 		self.get_square([0,9]).add_terrain(CWE_terrain.Capitol(self.get_square([0,9]), self.player_list[0]))
 		self.get_square([9,0]).add_terrain(CWE_terrain.Capitol(self.get_square([9,0]), self.player_list[1]))
-		self.get_square([1,8]).create_unit("Infantry")
 		self.get_square([1,8]).create_unit("Infantry")
 		self.get_square([2,7]).add_terrain(CWE_terrain.Base(self.get_square([2,7])))
 		self.get_square([4,5]).add_terrain(CWE_terrain.Base(self.get_square([4,5]), self.player_list[0]))
@@ -166,13 +165,16 @@ class Square(object):
 	#self.get_square([1,8]).add_unit(CWE_units.Unit("(Infantry", square = self.get_square([1,8]), player = self.player_list[0]))
 	
 	def create_unit(self, unit_type):
+		print 'create unit'
+		print self.Map.current_player
 		self.add_unit(CWE_units.Unit(unit_type, square = self, player = self.Map.current_player))
 	
 	def add_unit(self, unit_instance):
-		if self.unit != False:
+		print 'add unit'
+		if self.unit == False:
 			self.unit = unit_instance
-			return true
-		elif self.unit == False:
+			return True
+		else:
 			return False
 		
 	def remove_unit(self):

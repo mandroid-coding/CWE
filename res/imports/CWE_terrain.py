@@ -90,7 +90,7 @@ class Building(Terrain):
 		Terrain.__init__(self, square, defense)
 		self.HP = 20
 		self.controller = controller
-		self.color = "grey20"
+		#self.color = "pink"
 		self.unit_list = set()
 	def capture(self, unit):
 		if self.controller == unit.controller:
@@ -105,16 +105,20 @@ class Capitol(Building):
 	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 4, controller)
 		self.label = "Capitol"
+		self.color = "orange"
+		
 	
 class City(Building):
 	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 3, controller)
 		self.label = "City"
+		self.color = "red"
 	
 class Base(Building):
 	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Base"
+		self.color = "pink"
 		self.unit_list = set(
 		("Anti-Air, APC, Artillery, Infantry, Mech, Medium_Tank, Megatank, " +
 		"Missiles, Neotank, Piperunner, Recon, Rockets, Tank").split(", ")
@@ -123,6 +127,7 @@ class Airport(Building):
 	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Airport"
+		self.color = "white"
 		self.unit_list = set(
 		"B-Copter, Bomber, Fighter, Stealth, T-Copter".split(", ")
 		)
@@ -130,6 +135,7 @@ class Port(Building):
 	def __init__(self, square, controller = False):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Port"
+		self.color = "blue"
 		self.unit_list = set(
 		"Battleship, Black_Boat, Carrier, Cruiser, Lander, Sub".split(", ")
 		)

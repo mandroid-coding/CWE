@@ -7,7 +7,7 @@ class Menu:
         self.parts,self.titles = MenuOptions().getMenuOptions()
         #Need exception handling for empty lists
         self.selected = 0
-        print("Menu initialized")
+        print "Menu initialized"
         
     def scroll_increment(self,inc):
         self.selected = (self.selected + inc) % len(self.parts)

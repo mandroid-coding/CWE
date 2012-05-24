@@ -81,7 +81,10 @@ class Cwe():
 			# displays the config menu for new game, just a placeholder right now
 			self.display_new_config()
 			
-			self.new_game(CWE_map.Map(["Player1", "Player2"]))
+			players = [CWE_map.Player("Herp"), CWE_map.Player("Derp")]
+			
+			#self.new_game(CWE_map.Map(["Player1", "Player2"]))
+			self.new_game(CWE_map.Map(players))
 
 		# load game
 		elif self.selected == 1:
@@ -154,19 +157,42 @@ class Cwe():
 			
 			# iterates through each square from the top
 			for j in range(len(self.maps.squares[i])):
+				
+				# draws square
 				self.draw_square(i, j, self.maps.squares[i][j].terrain.color)
+				
 				#(TV: Also need to attach unit image here)
+				
+				# selects last square drawn
 				current_square = self.maps.squares[i][j]
+
+				print current_square.unit
+				
 				if current_square.unit:
+					
 					shown_unit = current_square.unit
+					# NO NEUTRAL UNITS
 					# hande neutral units here
-					if shown_unit.controller == None:
-						unit_color = "Gray"
-					else:
-						unit_color = shown_unit.controller.color
-					image_filename = "{color}_{unit_type}.gif".format(\
-					color = unit_color,\
-					unit_type = unit.image_type )
+					#if shown_unit.controller == None:
+					#	unit_color = "blue"
+					#else:
+					
+					print '180: ', shown_unit.controller
+					
+					#unit_color = shown_unit.controller.color
+					filename = "res/images/"+unit_color+"_"+shown_unit.image_type+".gif"
+					
+					print filename
+					
+					filenm = Tkinter.PhotoImage(file=filename)
+					self.canvas.create_image(200,200, ancor="nw", image=filenm)
+					
+					# FIXED as simpler above.
+					#image_filename = "{color}_{unit_type}.gif".format(\
+					#color = unit_color,\
+					#unit_type = unit.image_type )
+		
+		
 		# Loads selector image
 		self.images['game_selector'] = Tkinter.PhotoImage(file="res/images/game_selector.gif")
 		self.game_selector = self.canvas.create_image(0, 0, anchor="nw", image=self.images['game_selector'])
@@ -244,9 +270,28 @@ class Cwe():
 		except IndexError:
 			pass
 	def game_select(self, event):
-		# FIXME: add check for if there's no unit and no building
-		self.display_game_menu()
-		menu=CWE_flow.MenuOptions().getMenuOptions(self.maps)
+		# square has unit which hasn't yet moved
+		if self.maps.get_square(self.selected).unit != False and !self.maps.get_square(self.selected).unit.has_moved:
+			print "unit selected to move"
+		
+		# if there's no unit and no building which builds stuff
+		if self.maps.get_square(self.selected).unit == False:
+			if self.maps.get_square(self.selected).terrain.label != "Base":
+				if self.maps.get_square(self.selected).terrain.label != "Port":
+					if self.maps.get_square(self.selected).terrain.label != "Airport":		
+						
+						# displays the main ingame menu 
+						self.display_game_menu()
+						#menu=CWE_flow.MenuOptions().getMenuOptions(self.maps)
+						
+		# if there's a base without a unit on it
+		if self.maps.get_square(self.selected).unit == False
+			if self.maps.get_square(self.selected).terrain.label == "Base":
+				print self.maps.get_square(self.selected).terrain.unit_list
+			if self.maps.get_square(self.selected).terrain.label == "Port":
+				print self.maps.get_square(self.selected).terrain.unit_list
+			if self.maps.get_square(self.selected).terrain.label == "Airport":
+				print self.maps.get_square(self.selected).terrain.unit_list			
 		
 
 	########################
