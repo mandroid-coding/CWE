@@ -1,12 +1,6 @@
 import random
 import CWE_terrain
 import CWE_units
-
-class CursorError(Exception):
-	def __init__(self, Value):
-		self.value = Value
-	def __str__(self):
-		return str(self.value)
 		
 class UnitError(Exception):
 	def __init__(self, Value):
@@ -31,7 +25,6 @@ class Player(object):
 class Map(object):
 	def __init__(self, player_list = ["Player 1", "Player 2"]):
 		self.squares = []
-		self.cursor = [0, 0]
 		self.player_list = []
 		for player_name in player_list:
 		    self.player_list.append( Player(player_name) )
@@ -44,6 +37,10 @@ class Map(object):
 		self.squares = self.create_grid(10)
 		self.test_map_one()
 	
+	#returns true if someone has won and the game is over and returns false if nobody has won yet.
+	def win_check():
+		
+	
 	def get_square(self, coordinate_list):
 		return self.squares[coordinate_list[0]][coordinate_list[1]]
  
@@ -53,9 +50,7 @@ class Map(object):
 				unit.has_moved = False
 				unit.moves_left = unit.move_range
 				
-	def cursor_square(self):
-		#return self.find_square(self.cursor)
-		return self.find_square()
+
 		
 	def test_map_one(self):
 		test_map = self.create_grid(10)
@@ -125,22 +120,6 @@ class Map(object):
 		for building in self.buildings:
 			if building.controller == player:
 				count += 1
-			
-	def move_cursor(self, direction):
-		if direction == "up":
-			if len(self.squares[0]) > self.cursor[1]:
-				self.cursor[1] += 1
-		elif direction == "right":
-			if len(self.squares) > self.cursor[0]:
-				self.cursor[0]+= 1
-		elif direction  == "left":
-			if self.cursor[0] > 0:
-				self.cursor[0] -= 1
-		elif direction == "down":
-			if self.cursor[1] > 0:
-				self.cursor -= 1
-		else:
-			return False
 				
 	def current_player(self):
 		return self.player_list[self.turn_count % 2]
@@ -169,10 +148,10 @@ class Square(object):
 		self.add_unit(CWE_units.Unit(unit_type, square = self, controller = self.Map.current_player))
 	
 	def add_unit(self, unit_instance):
-		if self.unit != False:
+		if self.unit == False:
 			self.unit = unit_instance
-			return true
-		elif self.unit == False:
+			return True
+		elif self.unit != False:
 			return False
 		
 	def remove_unit(self):
@@ -232,8 +211,6 @@ def code_check():
 	print "test of find_rage(1,3):", x.squares[3][3].find_unrestricted_range(1)
 	print "test of square.distance_to (should be 5) :", x.squares[3][3].distance_to(x.squares[6][5])
 	print "test of print_map: \n", print_map(x)
-	if x.get_square([1,8]).unit == False:
-		print "!!!!!!!!!!!!!!!!!!!!!!"
 
 def print_map(a_map):
 	print "Printing map to console.\n\nBeep beep, boop boop..."
