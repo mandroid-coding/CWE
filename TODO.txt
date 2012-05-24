@@ -1,0 +1,10 @@
+In advance wars:
+    There are four players (CWE only supports two players so far)
+    One side loses when the last of its units are destroyed (CWE does not have loss conditions)
+    One side also loses when its Capitol is captured.
+    Fog of war exists,
+    Infantry/mech have +3 vision on mountains,
+    Air units can always see into forests and reefs within range,
+    Other units must be adjacent to reveal forests and reefs
+    Units use fuel when they move (unknown if CWE supports movement yet)
+    Units display their health (1-10) on their sprite (transparent number)
