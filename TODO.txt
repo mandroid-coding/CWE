@@ -8,3 +8,9 @@ In advance wars:
     Other units must be adjacent to reveal forests and reefs
     Units use fuel when they move (unknown if CWE supports movement yet)
     Units display their health (1-10) on their sprite (transparent number)
+    
+Ensure the following exist:
+    Unit movement, attacks
+    Buying, repairing units.
+    Handing off the turn to the next player
+    Refreshing controlled units at the beginning of a turn
