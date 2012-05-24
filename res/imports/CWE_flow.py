@@ -153,12 +153,12 @@ class MenuOptions:
     
     #End turn and perform passive building actions
     def endTurn(self,board):
+        """
         for bldg in board.buildings:
             #If it's controlled by the current player,
             if(bldg.controller == board.current_player()):
                 #Then if it's a factory and has a unit on it owned by the player,
-#FIX: assumptions about name storage
-                if (any([bldg.name=="base",bldg.name=="airport",bldg.name=="port"]) and (bldg.square.unit!=None and bldg.square.unit.controller==board.current_player)):
+                if (any([bldg.name=="Base",bldg.name=="Airport",bldg.name=="Port"]) and (bldg.square.unit!=None and bldg.square.unit.controller==board.current_player)):
                     #Then if that unit's damaged,
                     if(bldg.square.unit.hp < bldg.square.unit.max_hp):
                         #Repair it by 20% of its max hp.
@@ -172,10 +172,38 @@ class MenuOptions:
                         bldg.square.unit.controller.money -= (bldg.square.unit.cost * 0.2)
                         
                 #If it's a city, is controlled by the current player and isn't covered by an enemy unit,
-                elif ((bldg.name == "city") and not (bldg.square.unit!=None and bldg.square.unit.controller!=board.current_player())):
+                #(TV: Instead of the last two, just make sure it's not being 
+                captured.)
+                elif ((bldg.name == "city") and\
+                #not (bldg.square.unit!=None and\
+                #bldg.square.unit.controller!=board.current_player())):
+                not bldg.being_captured:
                     #Give the current player one MILLION thousandths of a dollar
                     board.current_player().money += 1000
-            
+        """
+        #Check each building for units to repair
+        for current_building in board.buildings:
+            #(only check buildings owned by the current player)
+            if( current_building.controller == board.current_player() ):
+                #Check for a unit at all
+                if current_building.square.unit != None:
+                    #Match the correct type of unit with the building type
+                    current_unit = current_building.square.unit
+                    #Ensure the unit can be repaired by the building
+                    if current_building.name in board.repair_types.keys() and\
+                    current_unit.move_type in board.repair_types[current_building.name]:
+                        hp = current_unit.hp
+                        max_hp = current_unit.max_hp
+                        regen_amount = round(float(max_hp)/10)
+                        regen_cost = int(round(0.1 * current_unit.cost))
+                        if board.current_player().funds >= regen_cost
+                            if hp + regen_amount >= max_hp:
+                                current_unit.hp = current_unit.max_hp
+                            else:
+                                current_unit.hp += regen_amount
+                                boards.current_player().funds -= regen_cost
+                #(TV: captured buildings still provide income, and all buildings provide 1000 income.)
+                board.current_player().funds += 1000
         #Increment turn by one
         board.turn += 1
     
@@ -199,8 +227,8 @@ class MenuOptions:
         # square has a unit and unit is owned by active player
         # FIXME: add check for the unit having moved already.
         if((sqr.unit!=None) and (sqr.unit.player == board.current_player())):
+            opts_list = self.getUnitOptions(sqr.unit)
             pass
-
 		# square has no unit but does have a building that the current player owns
         elif((sqr.unit==None) and (any([str(sqr.terrain.label)=="Base",str(sqr.terrain.label)=="Airport",str(sqr.terrain.label)=="Port"]))) and sqr.controller==board.current_player:
             # return the build menu options

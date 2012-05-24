@@ -43,7 +43,12 @@ class Map(object):
 		self.buildings = set()
 		self.squares = self.create_grid(10)
 		self.test_map_one()
-	
+		self.repair_types = {\
+		"Port": ["Ship", "Transport"],\
+		"Airport": ["Air", "Copter"],\
+		"City": ["Tires", "Treads", "Infantry", "Mech"],\
+		"Base": ["Tires", "Treads", "Pipe", "Infantry", "Mech"],\
+		"Capitol": ["Tires", "Treads", "Infantry", "Mech"] }
 	def get_square(self, coordinate_list):
 		return self.squares[coordinate_list[0]][coordinate_list[1]]
  
@@ -72,6 +77,10 @@ class Map(object):
 		self.get_square([0,9]).add_terrain(CWE_terrain.Capitol(self.get_square([0,9]), self.player_list[0]))
 		self.get_square([9,0]).add_terrain(CWE_terrain.Capitol(self.get_square([9,0]), self.player_list[1]))
 		self.get_square([1,8]).create_unit("Infantry")
+<<<<<<< HEAD
+=======
+		self.get_square([5,8]).create_unit("Infantry")
+>>>>>>> 46ebbbb76c46afba259ee7b72bf631fc0b4afc08
 		self.get_square([2,7]).add_terrain(CWE_terrain.Base(self.get_square([2,7])))
 		self.get_square([4,5]).add_terrain(CWE_terrain.Base(self.get_square([4,5]), self.player_list[0]))
 		self.get_square([7,2]).add_terrain(CWE_terrain.Base(self.get_square([7,2]), self.player_list[1]))
@@ -96,11 +105,11 @@ class Map(object):
 	
 	def remove_unit(self, coordinates):
 		unit_instance = self.find_square(coordinates).unit
-		self.find_square(coordinates).unit = False
+		self.find_square(coordinates).unit = None
 		self.units.remove(unit_instance)
 	
 	def move_unit(self, unit , fst_coordinates, end_coordinates):
-		if self.find_square(end_coordinates).unit == False:
+		if self.find_square(end_coordinates).unit == None:
 			self.find_square(end_coordinates) == unit
 			if hasattr(self.find_square(fst_coordinates).terrain, "HP"):
 				self.find_square(fst_coordinates).terrain.HP = 20
@@ -148,11 +157,11 @@ class Square(object):
 	def __init__(self, Map,  Position):
 		self.Map = Map
 		self.position = Position
-		self.initial_terrain = False
-		self.terrain = False
-		self.unit = False
+		self.initial_terrain = None
+		self.terrain = None
+		self.unit = None
 		self.adjacent_squares = []
-		moove_num = 0
+		
 	
 	def distance_to(self, square):
 	#	for i in range(100):
@@ -170,16 +179,23 @@ class Square(object):
 		self.add_unit(CWE_units.Unit(unit_type, square = self, player = self.Map.current_player))
 	
 	def add_unit(self, unit_instance):
+<<<<<<< HEAD
 		print 'add unit'
 		if self.unit == False:
 			self.unit = unit_instance
 			return True
 		else:
+=======
+		if self.unit != None:
+			self.unit = unit_instance
+			return True
+		elif self.unit == None:
+>>>>>>> 46ebbbb76c46afba259ee7b72bf631fc0b4afc08
 			return False
 		
 	def remove_unit(self):
-		if self.unit != False:
-			self.unit = False
+		if self.unit != None:
+			self.unit = None
 			return True
 		else:
 			return False
@@ -226,7 +242,7 @@ class Square(object):
 	def can_build(self):
 		if isinstance( self.terrain, CWE_terrain.Building ) and self.terrain.unit_list != set():
 			return self.terrain.unit_list
-		else: return false
+		else: return False
 # PLEASE NOTE THAT THESE DON'T WORK PROPERLY, PLEASE DON'T RELY ON THEM
 def code_check():
 	x = Map()
