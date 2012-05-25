@@ -226,6 +226,7 @@ class MenuOptions:
         #Descriptive text for each method
         titles_list = []
         
+        #sqr = board.cursor_square()
         sqr = board.cursor_square()
         
         # square has a unit and unit is owned by active player

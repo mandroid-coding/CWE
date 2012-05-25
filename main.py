@@ -7,6 +7,9 @@ class Cwe():
 		# how long one side of the square is, referenced in constructing the map and moving the cursor and pieces
 		self.side_len = 25
 		
+		self.unit_images = []
+		
+		
 		# init root and frame
 		self.main = Tkinter.Tk()
 		self.frame = Tkinter.Frame(self.main, width=800, height=600, background="black")
@@ -179,12 +182,14 @@ class Cwe():
 					print '180: ', shown_unit.controller()
 					
 					unit_color = shown_unit.controller().color
-					filename = "./res/images/"+unit_color+"_"+shown_unit.image_type+".gif"
+					filename = "res/images/"+unit_color+"_"+shown_unit.image_type+".gif"
 					
 					print filename
 					
 					filenm = Tkinter.PhotoImage(file=filename)
-					self.canvas.create_image(200, 200, anchor="nw", image=filenm)
+					self.unit_images.append(filenm)		
+					
+					self.canvas.create_image(i*self.side_len, j*self.side_len, anchor="nw", image=filenm)
 					
 					# FIXED as simpler above.
 					#image_filename = "{color}_{unit_type}.gif".format(\
@@ -207,6 +212,8 @@ class Cwe():
 		if self.maps.get_square(self.maps.selected).unit != None:
 			if not self.maps.get_square(self.maps.selected).unit.has_moved:
 				print "unit selected to move"
+				print CWE_flow.MenuOptions().getMoveHighlights(self.maps)
+		
 		
 		# if there's no unit and no building which builds stuff
 		if self.maps.get_square(self.maps.selected).unit == None:
