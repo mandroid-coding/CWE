@@ -205,28 +205,28 @@ class Cwe():
 		print self.maps.get_square(self.maps.selected).unit
 		
 		# square has unit which hasn't yet moved
-		if self.maps.get_square(self.selected).unit != None:
-			if not self.maps.get_square(self.selected).unit.has_moved:
+		if self.maps.get_square(self.maps.selected).unit != None:
+			if not self.maps.get_square(self.maps.selected).unit.has_moved:
 				print "unit selected to move"
 		
 		# if there's no unit and no building which builds stuff
-		if self.maps.get_square(self.selected).unit == None:
-			if self.maps.get_square(self.selected).terrain.label != "Base":
-				if self.maps.get_square(self.selected).terrain.label != "Port":
-					if self.maps.get_square(self.selected).terrain.label != "Airport":		
+		if self.maps.get_square(self.maps.selected).unit == None:
+			if self.maps.get_square(self.maps.selected).terrain.label != "Base":
+				if self.maps.get_square(self.maps.selected).terrain.label != "Port":
+					if self.maps.get_square(self.maps.selected).terrain.label != "Airport":		
 						
 						# displays the main ingame menu 
 						self.display_game_menu()
 						#menu=CWE_flow.MenuOptions().getMenuOptions(self.maps)
 						
 		# if there's a base without a unit on it
-		if self.maps.get_square(self.selected).unit == None:
-			if self.maps.get_square(self.selected).terrain.label == "Base":
-				print self.maps.get_square(self.selected).terrain.unit_list
-			if self.maps.get_square(self.selected).terrain.label == "Port":
-				print self.maps.get_square(self.selected).terrain.unit_list
-			if self.maps.get_square(self.selected).terrain.label == "Airport":
-				print self.maps.get_square(self.selected).terrain.unit_list			
+		if self.maps.get_square(self.maps.selected).unit == None:
+			if self.maps.get_square(self.maps.selected).terrain.label == "Base":
+				print self.maps.get_square(self.maps.selected).terrain.unit_list
+			if self.maps.get_square(self.maps.selected).terrain.label == "Port":
+				print self.maps.get_square(self.maps.selected).terrain.unit_list
+			if self.maps.get_square(self.maps.selected).terrain.label == "Airport":
+				print self.maps.get_square(self.maps.selected).terrain.unit_list			
 	def game_move_down(self, event):
 		if self.maps.game_move_down():
 			self.canvas.move(self.game_selector, 0, self.side_len)
