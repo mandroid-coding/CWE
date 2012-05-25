@@ -99,10 +99,11 @@ class Building(Terrain):
 		if self.HP < 0 or self.HP == 0:
 			self.controller = unit.controller
 			self.HP = 20
+
 			self.being_captured = False
 
 class Capitol(Building):
-	def __init__(self, square, controller = False):
+	def __init__(self, square, controller):
 		Building.__init__(self, square, 4, controller)
 		self.label = "Capitol"
 		self.color = "orange"
@@ -112,8 +113,9 @@ class Capitol(Building):
 			return False
 		self.HP -= unit.hp
 		if self.HP < 0 or self.HP == 0:
-			#self.square.Map.eradicate_units(self.controller)
-			#self.square.Map.
+			self.square.Map.eradicate_units(self.controller)
+			self.square.Map.player_list.remove(self.controller)
+			##
 			self.controller = unit.controller
 			self.HP = 20
 	

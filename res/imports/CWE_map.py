@@ -43,15 +43,34 @@ class Map(object):
 		"City": ["Tires", "Treads", "Infantry", "Mech"],\
 		"Base": ["Tires", "Treads", "Pipe", "Infantry", "Mech"],\
 		"Capitol": ["Tires", "Treads", "Infantry", "Mech"] }
-	##def eradicate_units(self, player):
-		##for unit in self.units:
-			##unit.square.remove_unit()
+		
+	def eradicate_units(self, player):
+		for unit in self.units:
+			if unit.controller == player:
+				unit.square.remove_unit()
 	
-	###returns true if someone has won and the game is over and returns false if nobody has won yet.
-	##def win_check():
+	#returns true if someone has won and the game is over and returns false if nobody has won yet.
+	def win_check():
+		if len(self.player_list) == 1:
+			return true
+		else:
+			return false
+
 	def get_square(self, coordinate_list):
 		return self.squares[coordinate_list[0]][coordinate_list[1]]
- 
+	
+	def turn_upkeep():
+		for player in self.player_list:
+			has_units = False
+			for unit in self.units:
+				if unit.controller == player:
+					has_units = True
+			if has_units == False:
+				player_list.remove(player)
+		if win_check():
+			print player_list[0] + "won!!!!  " * 200
+		
+	
 	def refresh_units(self):
 		for unit in self.units:
 			if unit.player == self.current_player:
