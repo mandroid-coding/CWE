@@ -185,7 +185,7 @@ class Cwe():
 					print filename
 					
 					filenm = Tkinter.PhotoImage(file=filename)
-					self.canvas.create_image(200,200, ancor="nw", image=filenm)
+					self.canvas.create_image(200, 200, ancor="nw", image=filenm)
 					
 					# FIXED as simpler above.
 					#image_filename = "{color}_{unit_type}.gif".format(\
