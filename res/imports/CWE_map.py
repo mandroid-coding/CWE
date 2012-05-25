@@ -36,28 +36,40 @@ class Map(object):
 		self.buildings = set()
 		self.squares = self.create_grid(10)
 		self.test_map_one()
-<<<<<<< HEAD
-		
-	##def eradicate_units(self, player):
-		##for unit in self.units:
-			##unit.square.remove_unit()
-	
-	###returns true if someone has won and the game is over and returns false if nobody has won yet.
-	##def win_check():
-		
-		
-	
-=======
 		self.repair_types = {\
 		"Port": ["Ship", "Transport"],\
 		"Airport": ["Air", "Copter"],\
 		"City": ["Tires", "Treads", "Infantry", "Mech"],\
 		"Base": ["Tires", "Treads", "Pipe", "Infantry", "Mech"],\
 		"Capitol": ["Tires", "Treads", "Infantry", "Mech"] }
->>>>>>> c98904831037d8459d989d52c14ce26e7ec0afe2
+		
+	def eradicate_units(self, player):
+		for unit in self.units:
+			if unit.controller == player:
+				unit.square.remove_unit()
+	
+	#returns true if someone has won and the game is over and returns false if nobody has won yet.
+	def win_check():
+		if len(self.player_list) == 1:
+			return true
+		else:
+			return false
+			
 	def get_square(self, coordinate_list):
 		return self.squares[coordinate_list[0]][coordinate_list[1]]
- 
+	
+	def turn_upkeep():
+		for player in self.player_list:
+			has_units = False
+			for unit in self.units:
+				if unit.controller == player:
+					has_units = True
+			if has_units == False:
+				player_list.remove(player)
+		if win_check():
+			print player_list[0] + "won!!!!  " * 200
+		
+	
 	def refresh_units(self):
 		for unit in self.units:
 			if unit.player == self.current_player:
@@ -162,17 +174,10 @@ class Square(object):
 		self.add_unit(CWE_units.Unit(unit_type, square = self, controller = self.Map.current_player))
 	
 	def add_unit(self, unit_instance):
-<<<<<<< HEAD
 		if self.unit == False:
 			self.unit = unit_instance
 			return True
 		elif self.unit != False:
-=======
-		if self.unit != None:
-			self.unit = unit_instance
-			return True
-		elif self.unit == None:
->>>>>>> c98904831037d8459d989d52c14ce26e7ec0afe2
 			return False
 		
 	def remove_unit(self):
