@@ -1,7 +1,7 @@
 class Menu:
     
     def __init__(self,board):
-		# fetches lists
+        # fetches lists
         # changing this for now since it doesn't seem to point to the right method...
         #self.parts,self.titles = MenuOptions.getOptions(board)
         self.parts,self.titles = MenuOptions().getMenuOptions()
@@ -135,7 +135,7 @@ class MenuOptions:
     
     #Get list of building options
     def getBuildOptions(self,board):
-		# 
+        # 
         build_opt_list = []
         # list of strings to pass to the menu constructor
         build_txt_list = []
@@ -196,7 +196,7 @@ class MenuOptions:
                         max_hp = current_unit.max_hp
                         regen_amount = round(float(max_hp)/10)
                         regen_cost = int(round(0.1 * current_unit.cost))
-                        if board.current_player().funds >= regen_cost:
+                        if board.current_player().funds >= regen_cost
                             if hp + regen_amount >= max_hp:
                                 current_unit.hp = current_unit.max_hp
                             else:
@@ -229,7 +229,7 @@ class MenuOptions:
         if((sqr.unit!=None) and (sqr.unit.player == board.current_player())):
             opts_list = self.getUnitOptions(sqr.unit)
             pass
-		# square has no unit but does have a building that the current player owns
+        # square has no unit but does have a building that the current player owns
         elif((sqr.unit==None) and (any([str(sqr.terrain.label)=="Base",str(sqr.terrain.label)=="Airport",str(sqr.terrain.label)=="Port"]))) and sqr.controller==board.current_player:
             # return the build menu options
             return self.getBuildOptions(board)
@@ -267,6 +267,6 @@ class BuildOption:
 
 # testing block...
 if __name__=='__main__':
-	import CWE_map
-	n = CWE_map.Map('derp')
-	m = Menu(n)
+    import CWE_map
+    n = CWE_map.Map('derp')
+    m = Menu(n)

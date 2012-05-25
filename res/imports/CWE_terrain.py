@@ -101,7 +101,7 @@ class Building(Terrain):
 		if self.HP < 0 or self.HP == 0:
 			self.controller = unit.controller
 			self.HP = 20
-	        self.being_captured = False
+			self.being_captured = False
 
 class Capitol(Building):
 	def __init__(self, square, controller = None):

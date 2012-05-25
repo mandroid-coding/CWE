@@ -27,10 +27,10 @@ class Map(object):
 		self.squares = []
 		self.player_list = []
 		for player_name in player_list:
-		    self.player_list.append( Player(player_name) )
+			self.player_list.append( Player(player_name) )
 		self.color_list = ["Orange", "Blue", "Red", "Black"]
 		for player_index in range(len(self.player_list)):
-		    self.player_list[player_index].color = self.color_list[player_index]
+			self.player_list[player_index].color = self.color_list[player_index]
 		self.turn_count = 0
 		self.units = set()
 		self.buildings = set()
@@ -56,7 +56,8 @@ class Map(object):
 			if unit.player == self.current_player:
 				unit.has_moved = False
 				unit.moves_left = unit.move_range
-				
+				unit.fuel -= unit.fuel_per_turn
+				if unit.fuel <= 0: unit.die()
 
 		
 	def test_map_one(self):
