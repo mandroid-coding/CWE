@@ -36,25 +36,18 @@ class Map(object):
 		self.buildings = set()
 		self.squares = self.create_grid(10)
 		self.test_map_one()
-<<<<<<< HEAD
-		
-	##def eradicate_units(self, player):
-		##for unit in self.units:
-			##unit.square.remove_unit()
-	
-	###returns true if someone has won and the game is over and returns false if nobody has won yet.
-	##def win_check():
-		
-		
-	
-=======
 		self.repair_types = {\
 		"Port": ["Ship", "Transport"],\
 		"Airport": ["Air", "Copter"],\
 		"City": ["Tires", "Treads", "Infantry", "Mech"],\
 		"Base": ["Tires", "Treads", "Pipe", "Infantry", "Mech"],\
 		"Capitol": ["Tires", "Treads", "Infantry", "Mech"] }
->>>>>>> c98904831037d8459d989d52c14ce26e7ec0afe2
+	##def eradicate_units(self, player):
+		##for unit in self.units:
+			##unit.square.remove_unit()
+	
+	###returns true if someone has won and the game is over and returns false if nobody has won yet.
+	##def win_check():
 	def get_square(self, coordinate_list):
 		return self.squares[coordinate_list[0]][coordinate_list[1]]
  
@@ -159,20 +152,13 @@ class Square(object):
 	#self.get_square([1,8]).add_unit(CWE_units.Unit("(Infantry", square = self.get_square([1,8]), player = self.player_list[0]))
 	
 	def create_unit(self, unit_type):
-		self.add_unit(CWE_units.Unit(unit_type, square = self, controller = self.Map.current_player))
+		self.add_unit(CWE_units.Unit(unit_type, square = self, controller = self.Map.current_player()))
 	
 	def add_unit(self, unit_instance):
-<<<<<<< HEAD
-		if self.unit == False:
+		if self.unit == None:
 			self.unit = unit_instance
 			return True
-		elif self.unit != False:
-=======
-		if self.unit != None:
-			self.unit = unit_instance
-			return True
-		elif self.unit == None:
->>>>>>> c98904831037d8459d989d52c14ce26e7ec0afe2
+		elif self.unit != None:
 			return False
 		
 	def remove_unit(self):

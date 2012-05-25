@@ -166,7 +166,7 @@ class Cwe():
 						unit_color = shown_unit.controller.color
 					image_filename = "{color}_{unit_type}.gif".format(\
 					color = unit_color,\
-					unit_type = unit.image_type )
+					unit_type = shown_unit.image_type )
 		# Loads selector image
 		self.images['game_selector'] = Tkinter.PhotoImage(file="res/images/game_selector.gif")
 		self.game_selector = self.canvas.create_image(0, 0, anchor="nw", image=self.images['game_selector'])
