@@ -27,10 +27,10 @@ class Map(object):
 		self.squares = []
 		self.player_list = []
 		for player_name in player_list:
-		    self.player_list.append( Player(player_name) )
+			self.player_list.append( Player(player_name) )
 		self.color_list = ["Orange", "Blue", "Red", "Black"]
 		for player_index in range(len(self.player_list)):
-		    self.player_list[player_index].color = self.color_list[player_index]
+			self.player_list[player_index].color = self.color_list[player_index]
 		self.turn_count = 0
 		self.units = set()
 		self.buildings = set()
@@ -42,6 +42,7 @@ class Map(object):
 		"City": ["Tires", "Treads", "Infantry", "Mech"],\
 		"Base": ["Tires", "Treads", "Pipe", "Infantry", "Mech"],\
 		"Capitol": ["Tires", "Treads", "Infantry", "Mech"] }
+<<<<<<< HEAD
 		
 	def eradicate_units(self, player):
 		for unit in self.units:
@@ -55,6 +56,14 @@ class Map(object):
 		else:
 			return false
 			
+=======
+	##def eradicate_units(self, player):
+		##for unit in self.units:
+			##unit.square.remove_unit()
+	
+	###returns true if someone has won and the game is over and returns false if nobody has won yet.
+	##def win_check():
+>>>>>>> 4b212cd3aa7ddb7961c3a1c21f66c749e3a6aca3
 	def get_square(self, coordinate_list):
 		return self.squares[coordinate_list[0]][coordinate_list[1]]
 	
@@ -75,7 +84,8 @@ class Map(object):
 			if unit.player == self.current_player:
 				unit.has_moved = False
 				unit.moves_left = unit.move_range
-				
+				unit.fuel -= unit.fuel_per_turn
+				if unit.fuel <= 0: unit.die()
 
 		
 	def test_map_one(self):
@@ -171,13 +181,20 @@ class Square(object):
 	#self.get_square([1,8]).add_unit(CWE_units.Unit("(Infantry", square = self.get_square([1,8]), player = self.player_list[0]))
 	
 	def create_unit(self, unit_type):
-		self.add_unit(CWE_units.Unit(unit_type, square = self, controller = self.Map.current_player))
+		self.add_unit(CWE_units.Unit(unit_type, square = self, controller = self.Map.current_player()))
 	
 	def add_unit(self, unit_instance):
+<<<<<<< HEAD
 		if self.unit == False:
 			self.unit = unit_instance
 			return True
 		elif self.unit != False:
+=======
+		if self.unit == None:
+			self.unit = unit_instance
+			return True
+		elif self.unit != None:
+>>>>>>> 4b212cd3aa7ddb7961c3a1c21f66c749e3a6aca3
 			return False
 		
 	def remove_unit(self):
