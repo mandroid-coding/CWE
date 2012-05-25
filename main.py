@@ -198,7 +198,6 @@ class Cwe():
 		self.game_selector = self.canvas.create_image(0, 0, anchor="nw", image=self.images['game_selector'])
 		self.displayed.append(self.game_selector)
 	
-	# fix this
 	def draw_square(self, x, y, color):
 		self.canvas.create_rectangle(self.side_len*x, self.side_len*y, self.side_len*x+self.side_len, self.side_len*y+self.side_len, fill=color)
 	def game_select(self, event):
@@ -230,15 +229,12 @@ class Cwe():
 	def game_move_down(self, event):
 		if self.maps.game_move_down():
 			self.canvas.move(self.game_selector, 0, self.side_len)
-					
 	def game_move_up(self, event):
 		if self.maps.game_move_up():
 			self.canvas.move(self.game_selector, 0, -self.side_len)
-
 	def game_move_right(self, event):
 		if self.maps.game_move_right():
 			self.canvas.move(self.game_selector, self.side_len, 0)
-		
 	def game_move_left(self, event):
 		if self.maps.game_move_left():
 			self.canvas.move(self.game_selector, -self.side_len, 0)
