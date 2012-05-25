@@ -127,7 +127,6 @@ class Cwe():
 	def new_game(self, game_map):		
 		self.location = "Ingame"
 		
-		self.selected = [0,0]
 
 		# defines testing map		
 		# listing each row...
@@ -177,15 +176,15 @@ class Cwe():
 					#	unit_color = "blue"
 					#else:
 					
-					print '180: ', shown_unit.controller
+					print '180: ', shown_unit.controller()
 					
 					unit_color = shown_unit.controller().color
-					filename = "res/images/"+unit_color+"_"+shown_unit.image_type+".gif"
+					filename = "./res/images/"+unit_color+"_"+shown_unit.image_type+".gif"
 					
 					print filename
 					
 					filenm = Tkinter.PhotoImage(file=filename)
-					self.canvas.create_image(200, 200, ancor="nw", image=filenm)
+					self.canvas.create_image(200, 200, anchor="nw", image=filenm)
 					
 					# FIXED as simpler above.
 					#image_filename = "{color}_{unit_type}.gif".format(\
@@ -202,76 +201,8 @@ class Cwe():
 	# fix this
 	def draw_square(self, x, y, color):
 		self.canvas.create_rectangle(self.side_len*x, self.side_len*y, self.side_len*x+self.side_len, self.side_len*y+self.side_len, fill=color)
-	def game_move_up(self, event):
-		try:
-			# calculates new indices
-			newx = self.selected[0]
-			newy = self.selected[1] - 1
-			
-			#FIXME: this is hackish right now because using negative integers as list indices makes python access the
-			# list backwards.  This will work for now but it may need a more permanent fix.
-			if newy < 0:
-				raise IndexError
-
-			# selects new square.  This is where the IndexError is thrown if no square exists
-			newsquare = self.maps.squares[newx][newy]
-			# resets the coords of the selector
-			self.selected = [newx, newy]
-			# finally moves the cursor
-			self.canvas.move(self.game_selector, 0, -self.side_len)
-		# catches the error thrown when no square exists
-		except IndexError:
-			pass
-	def game_move_left(self, event):
-		try:
-			# calculates new indices
-			newx = self.selected[0] - 1
-			newy = self.selected[1]
-			
-			#FIXME: this is hackish right now because using negative integers as list indices makes python access the
-			# list backwards.  This will work for now but it may need a more permanent fix.
-			if newx < 0:
-				raise IndexError
-			
-			# selects new square.  This is where the IndexError is thrown if no square exists
-			newsquare = self.maps.squares[newx][newy]
-			# resets the coords of the selector
-			self.selected = [newx, newy]
-			# finally moves the cursor
-			self.canvas.move(self.game_selector, -self.side_len, 0)
-		# catches the error thrown when no square exists
-		except IndexError:
-			pass
-	def game_move_right(self, event):
-		try:
-			# calculates new indices
-			newx = self.selected[0]+1
-			newy = self.selected[1]
-			# selects new square.  This is where the IndexError is thrown if no square exists
-			newsquare = self.maps.squares[newx][newy]
-			# resets the coords of the selector
-			self.selected = [newx, newy]
-			# finally moves the cursor
-			self.canvas.move(self.game_selector, self.side_len, 0)
-		# catches the error thrown when no square exists
-		except IndexError:
-			pass
-	def game_move_down(self, event):
-		try:
-			# calculates new indices
-			newx = self.selected[0]
-			newy = self.selected[1] + 1
-			# selects new square.  This is where the IndexError is thrown if no square exists
-			newsquare = self.maps.squares[newx][newy]
-			# resets the coords of the selector
-			self.selected = [newx, newy]
-			# finally moves the cursor
-			self.canvas.move(self.game_selector, 0, self.side_len)
-		# catches the error thrown when no square exists
-		except IndexError:
-			pass
 	def game_select(self, event):
-		print self.maps.get_square(self.selected).unit
+		print self.maps.get_square(self.maps.selected).unit
 		
 		# square has unit which hasn't yet moved
 		if self.maps.get_square(self.selected).unit != None:
@@ -296,7 +227,21 @@ class Cwe():
 				print self.maps.get_square(self.selected).terrain.unit_list
 			if self.maps.get_square(self.selected).terrain.label == "Airport":
 				print self.maps.get_square(self.selected).terrain.unit_list			
+	def game_move_down(self, event):
+		if self.maps.game_move_down():
+			self.canvas.move(self.game_selector, 0, self.side_len)
+					
+	def game_move_up(self, event):
+		if self.maps.game_move_up():
+			self.canvas.move(self.game_selector, 0, -self.side_len)
+
+	def game_move_right(self, event):
+		if self.maps.game_move_right():
+			self.canvas.move(self.game_selector, self.side_len, 0)
 		
+	def game_move_left(self, event):
+		if self.maps.game_move_left():
+			self.canvas.move(self.game_selector, -self.side_len, 0)
 
 	########################
 	# ingame menu functions#

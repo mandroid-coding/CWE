@@ -25,6 +25,8 @@ class Player(object):
 class Map(object):
 	def __init__(self, player_list = ["Player 1", "Player 2"]):
 		self.squares = []
+		self.selected = [0,0]
+
 		self.player_list = []
 		for player_name in player_list:
 		    self.player_list.append( Player(player_name) )
@@ -151,6 +153,77 @@ class Map(object):
 				
 	def current_player(self):
 		return self.player_list[self.turn_count % 2]
+
+	def game_move_up(self):
+		try:
+			# calculates new indices
+			newx = self.selected[0]
+			newy = self.selected[1] - 1
+			
+			#FIXME: this is hackish right now because using negative integers as list indices makes python access the
+			# list backwards.  This will work for now but it may need a more permanent fix.
+			if newy < 0:
+				raise IndexError
+
+			# selects new square.  This is where the IndexError is thrown if no square exists
+			newsquare = self.squares[newx][newy]
+			# resets the coords of the selector
+			self.selected = [newx, newy]
+			# finally moves the cursor
+			return True
+		# catches the error thrown when no square exists
+		except IndexError:
+			pass
+	def game_move_left(self):
+		try:
+			# calculates new indices
+			newx = self.selected[0] - 1
+			newy = self.selected[1]
+			
+			#FIXME: this is hackish right now because using negative integers as list indices makes python access the
+			# list backwards.  This will work for now but it may need a more permanent fix.
+			if newx < 0:
+				raise IndexError
+			
+			# selects new square.  This is where the IndexError is thrown if no square exists
+			newsquare = self.squares[newx][newy]
+			# resets the coords of the selector
+			self.selected = [newx, newy]
+			# finally moves the cursor
+			return True
+		# catches the error thrown when no square exists
+		except IndexError:
+			pass
+	def game_move_right(self):
+		try:
+			# calculates new indices
+			newx = self.selected[0]+1
+			newy = self.selected[1]
+			# selects new square.  This is where the IndexError is thrown if no square exists
+			newsquare = self.squares[newx][newy]
+			# resets the coords of the selector
+			self.selected = [newx, newy]
+			# finally moves the cursor
+			return True
+		# catches the error thrown when no square exists
+		except IndexError:
+			pass
+	def game_move_down(self):
+		try:
+			# calculates new indices
+			newx = self.selected[0]
+			newy = self.selected[1] + 1
+			# selects new square.  This is where the IndexError is thrown if no square exists
+			newsquare = self.squares[newx][newy]
+			# resets the coords of the selector
+			self.selected = [newx, newy]
+			# finally moves the cursor
+			return True
+		# catches the error thrown when no square exists
+		except IndexError:
+			pass
+
+
 		
 class Square(object):
 	def __init__(self, Map,  Position):
