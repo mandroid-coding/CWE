@@ -1,12 +1,6 @@
 import random
 import CWE_terrain
 import CWE_units
-
-class CursorError(Exception):
-	def __init__(self, Value):
-		self.value = Value
-	def __str__(self):
-		return str(self.value)
 		
 class UnitError(Exception):
 	def __init__(self, Value):
@@ -31,13 +25,13 @@ class Player(object):
 class Map(object):
 	def __init__(self, player_list = ["Player 1", "Player 2"]):
 		self.squares = []
-		self.cursor = [0, 0]
 		self.player_list = []
 		for player_name in player_list:
 		    self.player_list.append( Player(player_name) )
 		self.color_list = ["orange", "blue", "red", "black"]
+
 		for player_index in range(len(self.player_list)):
-		    self.player_list[player_index].color = self.color_list[player_index]
+			self.player_list[player_index].color = self.color_list[player_index]
 		self.turn_count = 0
 		self.units = set()
 		self.buildings = set()
@@ -49,6 +43,12 @@ class Map(object):
 		"City": ["Tires", "Treads", "Infantry", "Mech"],\
 		"Base": ["Tires", "Treads", "Pipe", "Infantry", "Mech"],\
 		"Capitol": ["Tires", "Treads", "Infantry", "Mech"] }
+	##def eradicate_units(self, player):
+		##for unit in self.units:
+			##unit.square.remove_unit()
+	
+	###returns true if someone has won and the game is over and returns false if nobody has won yet.
+	##def win_check():
 	def get_square(self, coordinate_list):
 		return self.squares[coordinate_list[0]][coordinate_list[1]]
  
@@ -56,10 +56,10 @@ class Map(object):
 		for unit in self.units:
 			if unit.player == self.current_player:
 				unit.has_moved = False
-				
-	def cursor_square(self):
-		#return self.find_square(self.cursor)
-		return self.find_square()
+				unit.moves_left = unit.move_range
+				unit.fuel -= unit.fuel_per_turn
+				if unit.fuel <= 0: unit.die()
+
 		
 	def test_map_one(self):
 		test_map = self.create_grid(10)
@@ -77,7 +77,6 @@ class Map(object):
 		self.get_square([0,9]).add_terrain(CWE_terrain.Capitol(self.get_square([0,9]), self.player_list[0]))
 		self.get_square([9,0]).add_terrain(CWE_terrain.Capitol(self.get_square([9,0]), self.player_list[1]))
 		self.get_square([1,8]).create_unit("Infantry")
-		self.get_square([5,8]).create_unit("Infantry")
 		self.get_square([2,7]).add_terrain(CWE_terrain.Base(self.get_square([2,7])))
 		self.get_square([4,5]).add_terrain(CWE_terrain.Base(self.get_square([4,5]), self.player_list[0]))
 		self.get_square([7,2]).add_terrain(CWE_terrain.Base(self.get_square([7,2]), self.player_list[1]))
@@ -130,22 +129,6 @@ class Map(object):
 		for building in self.buildings:
 			if building.controller == player:
 				count += 1
-			
-	def move_cursor(self, direction):
-		if direction == "up":
-			if len(self.squares[0]) > self.cursor[1]:
-				self.cursor[1] += 1
-		elif direction == "right":
-			if len(self.squares) > self.cursor[0]:
-				self.cursor[0]+= 1
-		elif direction  == "left":
-			if self.cursor[0] > 0:
-				self.cursor[0] -= 1
-		elif direction == "down":
-			if self.cursor[1] > 0:
-				self.cursor -= 1
-		else:
-			return False
 				
 	def current_player(self):
 		return self.player_list[self.turn_count % 2]
@@ -177,6 +160,7 @@ class Square(object):
 	
 	def add_unit(self, unit_instance):
 		print 'unit before: ', self.unit
+
 		if self.unit == None:
 			self.unit = unit_instance
 			print "unit after: ", self.unit
@@ -266,6 +250,7 @@ def print_map(a_map):
 
 if __name__ == "__main__":
 	code_check()
+	
 
 
 		

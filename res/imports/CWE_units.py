@@ -358,11 +358,12 @@ class Unit:
         self.image_type = self.real_image
         #Enable the following line if units are taking up too much space.
         #del self.normal_fuel_fost, real_image
-    def begin_turn(self):
+    """def begin_turn(self):
         #Assorted beginning-of-turn bookkeeping.
         self.fuel -= self.fuel_per_turn
         if self.fuel <= 0: self.die()
         self.moves_left = self.move_range
+    """
     #Method to handle unit carriers to drop units (loading must be done manually)
     def drop_unit(self, index, square):
         #Ensure that there exists a unit to be dropped, and that the carrier

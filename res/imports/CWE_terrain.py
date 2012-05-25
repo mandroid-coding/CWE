@@ -99,7 +99,7 @@ class Building(Terrain):
 		if self.HP < 0 or self.HP == 0:
 			self.controller = unit.controller
 			self.HP = 20
-	
+			self.being_captured = False
 
 class Capitol(Building):
 	def __init__(self, square, controller = False):
@@ -107,6 +107,15 @@ class Capitol(Building):
 		self.label = "Capitol"
 		self.color = "orange"
 		
+	def capture(self, unit):
+		if self.controller == unit.controller:
+			return False
+		self.HP -= unit.hp
+		if self.HP < 0 or self.HP == 0:
+			#self.square.Map.eradicate_units(self.controller)
+			#self.square.Map.
+			self.controller = unit.controller
+			self.HP = 20
 	
 class City(Building):
 	def __init__(self, square, controller = False):
@@ -136,6 +145,4 @@ class Port(Building):
 		Building.__init__(self, square, 3, controller)
 		self.label = "Port"
 		self.color = "blue"
-		self.unit_list = set(
-		"Battleship, Black_Boat, Carrier, Cruiser, Lander, Sub".split(", ")
-		)
+		self.unit_list = [["Battleship", "28000"], ["Black_Boat", "7500"], ["Carrier", "30000"], ["Cruiser", "18000"], ["Lander", "12000"], ["Sub", "20000"]]
