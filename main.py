@@ -179,7 +179,7 @@ class Cwe():
 					
 					print '180: ', shown_unit.controller
 					
-					#unit_color = shown_unit.controller.color
+					unit_color = shown_unit.controller().color
 					filename = "res/images/"+unit_color+"_"+shown_unit.image_type+".gif"
 					
 					print filename
@@ -270,12 +270,15 @@ class Cwe():
 		except IndexError:
 			pass
 	def game_select(self, event):
+		print self.maps.get_square(self.selected).unit
+		
 		# square has unit which hasn't yet moved
-		if self.maps.get_square(self.selected).unit != False and not self.maps.get_square(self.selected).unit.has_moved:
-			print "unit selected to move"
+		if self.maps.get_square(self.selected).unit != None:
+			if not self.maps.get_square(self.selected).unit.has_moved:
+				print "unit selected to move"
 		
 		# if there's no unit and no building which builds stuff
-		if self.maps.get_square(self.selected).unit == False:
+		if self.maps.get_square(self.selected).unit == None:
 			if self.maps.get_square(self.selected).terrain.label != "Base":
 				if self.maps.get_square(self.selected).terrain.label != "Port":
 					if self.maps.get_square(self.selected).terrain.label != "Airport":		
@@ -285,7 +288,7 @@ class Cwe():
 						#menu=CWE_flow.MenuOptions().getMenuOptions(self.maps)
 						
 		# if there's a base without a unit on it
-		if self.maps.get_square(self.selected).unit == False:
+		if self.maps.get_square(self.selected).unit == None:
 			if self.maps.get_square(self.selected).terrain.label == "Base":
 				print self.maps.get_square(self.selected).terrain.unit_list
 			if self.maps.get_square(self.selected).terrain.label == "Port":

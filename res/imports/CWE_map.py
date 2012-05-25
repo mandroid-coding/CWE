@@ -35,7 +35,7 @@ class Map(object):
 		self.player_list = []
 		for player_name in player_list:
 		    self.player_list.append( Player(player_name) )
-		self.color_list = ["Orange", "Blue", "Red", "Black"]
+		self.color_list = ["orange", "blue", "red", "black"]
 		for player_index in range(len(self.player_list)):
 		    self.player_list[player_index].color = self.color_list[player_index]
 		self.turn_count = 0
@@ -172,13 +172,14 @@ class Square(object):
 	
 	def create_unit(self, unit_type):
 		print 'create unit'
-		print self.Map.current_player
+		print 'current player: ', self.Map.current_player()
 		self.add_unit(CWE_units.Unit(unit_type, square = self, controller = self.Map.current_player))
 	
 	def add_unit(self, unit_instance):
-		print 'add unit'
-		if self.unit == False:
+		print 'unit before: ', self.unit
+		if self.unit == None:
 			self.unit = unit_instance
+			print "unit after: ", self.unit
 			return True
 		else:
 			return False
