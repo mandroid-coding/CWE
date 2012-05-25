@@ -151,7 +151,7 @@ class MenuOptions:
         
         return build_opt_list,build_txt_list
     
-    #End turn and perform passive building actions
+    #End turn and perform passive building actions, refresh units
     def endTurn(self,board):
         """
         for bldg in board.buildings:
@@ -201,20 +201,24 @@ class MenuOptions:
                                 current_unit.hp = current_unit.max_hp
                             else:
                                 current_unit.hp += regen_amount
-                                boards.current_player().funds -= regen_cost
+                                board.current_player().funds -= regen_cost
                 #(TV: captured buildings still provide income, and all buildings provide 1000 income.)
                 board.current_player().funds += 1000
+    
         #Increment turn by one
         board.turn += 1
     
-    #Will show view options
+        #Begin next turn
+        board.refresh_units()
+    
+    """
     def seeOptionsMenu(self,board):
         pass
     
     #Will pickle board & exit to menu -- this may be better in front-end code
     def saveAndQuit(self,board):
         pass
-
+    """
     #Grab top-level action menu
     def getMenuOptions(self,board):
         #Methods that the menu can access
